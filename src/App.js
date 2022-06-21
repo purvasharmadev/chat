@@ -1,9 +1,11 @@
 import "./App.css";
+import URLRoutes from "./router";
+
 
 function App() {
   return (
     <div className="App">
-      <h1>Chat here!</h1>
+      <URLRoutes/>
     </div>
   );
 }

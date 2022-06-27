@@ -1,10 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import MockAPI from "./mockman";
+import {useEffect} from "react"
 
 // Context
 // import { useAuth } from "./Auth/auth-context";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { getAuth } from "./Auth/auth-slice";
+import { loginState } from "./Auth/auth-slice";
 
 
 // Auth Routes
@@ -19,7 +21,15 @@ import {PageNotFound} from "./Pages/PageNotFound"
 
 
 export default function URLRoutes() {
-  const { isLoggedIn } = useSelector(getAuth);
+  const { status,isLoggedIn } = useSelector(getAuth);
+  const dispatch = useDispatch()
+  useEffect(()=>{
+   if(status ==='login succeded'){
+    dispatch(loginState(true))
+   }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[status,isLoggedIn])
+
   return (
     <Routes>
       {/* MockMan */}

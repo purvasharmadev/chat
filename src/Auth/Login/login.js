@@ -1,6 +1,6 @@
 import "../auth.css"
 
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth, login } from "../auth-slice";
@@ -21,6 +21,7 @@ function Login() {
       password: "guest123",
     }));
   };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -55,17 +56,11 @@ function Login() {
             name="password"
             placeholder="********"
           />
-          <div className="p-1">
-            <span
-              onClick={() => guestLogin()}
-              className="link position-right color-primary"
-            >
-              Guest Login
-            </span>
-          </div>
-          <button type="submit" className="btn btn-primary ">
+          <button type="submit" className="btn btn-primary mb-1 ">
             Login
           </button>
+          <button   onClick={() => guestLogin()}
+          type="submit" className = 'btn btn-secondary mb-1'>Login as Guest</button>
 
           <h4>
             <Link to="/signup" className="link color-primary">

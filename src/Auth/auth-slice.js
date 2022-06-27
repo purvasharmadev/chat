@@ -5,19 +5,20 @@ import { getDataFromLocal } from "../Hooks/useLocalStorage";
 
 // intial state
 const intialStateValue = {
-  user: getDataFromLocal("userInfo", null),
-  isLoggedIn: getDataFromLocal("isLoggedIn", false),
+  isLoggedIn: getDataFromLocal("isLoggedIn",false),
   status: "idle", // 'idle'| 'loading'|'succeded'|'failed'
   error: null,
 };
+
+
 
 export const login = createAsyncThunk(
   "api/auth/login",
   async (userDetail, thunkAPI) => {
     try {
       const res = await axios.post("/api/auth/login", userDetail);
-      localStorage.setItem("token ", res.data.encodedToken);
-      return res.data;
+      return   res.data
+
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.errors[0]);
     }
@@ -26,6 +27,8 @@ export const login = createAsyncThunk(
 
 // rejected state not fetching error solve: https://stackoverflow.com/questions/70517819/redux-toolkit-not-checking-the-rejected-case
 //  warning: non-serializable value detected in payload : https://stackoverflow.com/questions/66753905/redux-toolkit-non-serializable-value-detected
+//  Local storage not working properly: https://stackoverflow.com/questions/68421040/local-storage-using-redux-toolkit
+// add function to depedency for useEffect: https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook
 
 export const signup = createAsyncThunk(
   "api/auth/signup",
@@ -43,10 +46,12 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: intialStateValue,
   reducers: {
+    loginState:(state,action)=>{
+      state.isLoggedIn=action.payload;
+    },
     logout: (state, action) => {
       state.isLoggedIn = action.payload;
-      state.user = null;
-      localStorage.clear();
+      state.status='idle'
     },
   },
   extraReducers(builder) {
@@ -56,11 +61,8 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.isLoggedIn = true;
-        state.status = "succeded";
-        state.error=null
-        localStorage.setItem("isLoggedIn", state.isLoggedIn);
-        localStorage.setItem("userInfo", JSON.stringify(state.user.foundUser));
+        state.status = "login succeded";
+        state.error=null;
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.payload;
@@ -81,5 +83,5 @@ export const authSlice = createSlice({
 });
 
 export const getAuth = (state) => state.auth;
-export const { logout } = authSlice.actions;
+export const { logout, loginState } = authSlice.actions;
 export default authSlice.reducer;

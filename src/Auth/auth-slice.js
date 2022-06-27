@@ -6,7 +6,7 @@ import { getDataFromLocal } from "../Hooks/useLocalStorage";
 // intial state
 const intialStateValue = {
   isLoggedIn: getDataFromLocal("isLoggedIn",false),
-  status: "idle", // 'idle'| 'loading'|'succeded'|'failed'
+  status: "idle",
   error: null,
 };
 
@@ -72,7 +72,7 @@ export const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(signup.fulfilled, (state) => {
-        state.status = "succeded";
+        state.status = "signup succeded";
         state.error=null
       })
       .addCase(signup.rejected, (state, action) => {

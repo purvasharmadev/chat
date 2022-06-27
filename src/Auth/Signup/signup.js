@@ -20,25 +20,11 @@ function Signin() {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(signup({firstName:userData.firstName, lastName:userData.lastName, username:userData.username, password:userData.password }))
-    // fetchData({
-    //   method: "post",
-    //   url: "/api/auth/signup/",
-    //   data: {
-    //     firstName: userData.firstName,
-    //     lastName: userData.lastName,
-    //     username: userData.username,
-    //     password: userData.password,
-    //   },
-    // });
   };
 
-  // const { response, error, fetchData } = useAxios();
-
   useEffect(() => {
-    if (status === 'succeded') {
+    if (status === 'signup succeded') {
       navigate("/login", {replace:true})
-    } else {
-      console.log("error ", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
@@ -86,7 +72,7 @@ function Signin() {
             }
            type="text"
             name="username"
-            placeholder="yourname@mail.com"
+            placeholder="username"
           />
           <label for="password">Password </label>
           <input

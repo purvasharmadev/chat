@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
 import {signup,getAuth} from "../auth-slice"
 
+import {toast} from "react-toastify"
+
 function Signin() {
   const navigate = useNavigate();
   const { status,error } = useSelector(getAuth);
@@ -19,12 +21,26 @@ function Signin() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(signup({firstName:userData.firstName, lastName:userData.lastName, username:userData.username, password:userData.password }))
+    if(userData.firstName || userData.lastName || userData.password || userData.username !== ""){
+      dispatch(signup({firstName:userData.firstName, lastName:userData.lastName, username:userData.username, password:userData.password }))
+    }else{
+      toast.warning("Please fill all the fields!", {
+        toastId:"empty-field", position:toast.POSITION.TOP_RIGHT,
+        autoClose:2000})
+    }
+
   };
 
   useEffect(() => {
     if (status === 'signup succeded') {
       navigate("/login", {replace:true})
+      toast.success("User Successfully Created!", {
+        toastId:"signup-success", position:toast.POSITION.TOP_RIGHT,
+        autoClose:2000})
+    }else if(status === 'signup failed'){
+      toast.warning(error, {
+        toastId:"signup-failed", position:toast.POSITION.TOP_RIGHT,
+        autoClose:2000})
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
@@ -40,10 +56,8 @@ function Signin() {
       </div>
       <div className="input-container w-50">
         <h2 className="form-heading">Signin</h2>
-        {error && <p className="error">{error}</p>}
-
         <form onSubmit={handleSubmit} className="form-container">
-          <label for="fname">First Name</label>
+          <label htmlFor="fname">First Name</label>
           <input
             value={userData.firstName}
             onChange={(e) =>
@@ -53,7 +67,7 @@ function Signin() {
             name="fname"
             placeholder="First name"
           />
-          <label for="lname">Last Name</label>
+          <label htmlFor="lname">Last Name</label>
           <input
             value={userData.lastName}
             onChange={(e) =>
@@ -64,7 +78,7 @@ function Signin() {
             placeholder="Last name"
           />
 
-          <label for="username">username</label>
+          <label htmlFor="username">username</label>
           <input
             value={userData.username}
             onChange={(e) =>
@@ -74,7 +88,7 @@ function Signin() {
             name="username"
             placeholder="username"
           />
-          <label for="password">Password </label>
+          <label htmlFor="password">Password </label>
           <input
             value={userData.password}
             onChange={(e) =>

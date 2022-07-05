@@ -1,12 +1,14 @@
-import "../auth.css"
+import "../auth.css";
 
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth, login } from "../auth-slice";
 
+import { toast } from "react-toastify";
+
 function Login() {
-  const {error} = useSelector(getAuth)
+  const { error, status } = useSelector(getAuth);
   const dispatch = useDispatch();
 
   const [userData, setUserData] = useState({
@@ -22,20 +24,35 @@ function Login() {
     }));
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(
-      login({ username: userData.username, password: userData.password })
-    );
+    if (userData.username || userData.password !== "") {
+      dispatch(
+        login({ username: userData.username, password: userData.password })
+      );
+    } else {
+      toast.warning("Please fill all the fields", {
+        toastId: "login-failed",
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
   };
 
+  useEffect(() => {
+    status === "login failed" &&
+      toast.warning(error, {
+        toastId: "login-failed",
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
 
   return (
     <div className="flex p-1 flex-space-center form-auth">
       <div className="input-container w-50">
         <h2 className="form-heading">Login</h2>
-        {error && <p className="error"> {error}</p>}
         <form onSubmit={handleSubmit} className="form-container">
           <label htmlFor="username">username</label>
           <input
@@ -60,8 +77,13 @@ function Login() {
           <button type="submit" className="btn btn-primary mb-1 ">
             Login here!!
           </button>
-          <button   onClick={() => guestLogin()}
-          type="submit" className = 'btn btn-secondary mb-1'>Login as Guest</button>
+          <button
+            onClick={() => guestLogin()}
+            type="submit"
+            className="btn btn-secondary mb-1"
+          >
+            Login as Guest
+          </button>
 
           <h4>
             <Link to="/signup" className="link color-primary">

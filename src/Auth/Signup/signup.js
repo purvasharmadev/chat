@@ -21,7 +21,7 @@ function Signin() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(userData.firstName || userData.lastName || userData.password || userData.username !== ""){
+    if(userData.firstName && userData.lastName && userData.password && userData.username !== ""){
       dispatch(signup({firstName:userData.firstName, lastName:userData.lastName, username:userData.username, password:userData.password }))
     }else{
       toast.warning("Please fill all the fields!", {
@@ -47,13 +47,6 @@ function Signin() {
 
   return (
     <div className="flex p-1 flex-space-center form-auth">
-      <div>
-        <img
-          src="https://static.dw.com/image/59472921_303.jpg"
-          className="img-responsive"
-          alt="banner"
-        />
-      </div>
       <div className="input-container w-50">
         <h2 className="form-heading">Signin</h2>
         <form onSubmit={handleSubmit} className="form-container">
@@ -102,7 +95,7 @@ function Signin() {
             Signin
           </button>
           <h4>
-            <Link to="/login" className="link">
+            <Link to="/login" className="link color-primary">
               Already User? Login Here!{" "}
               <i className="fa fa-arrow-right fa-x"></i>
             </Link>

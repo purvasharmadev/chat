@@ -1,0 +1,15 @@
+/* facebook blue : #1096F5 */
+/* facebook bg: #242526 */
+/* facebook text: #E2E3E8  */
+
+:root{
+    --PRIMARY-COLOR:#1096F5;
+    --BACKGROUND-COLOR:#242526 ;
+    --TEXT-COLOR:#E2E3E8;
+    font-size: 12px;
+}
+
+.App{
+    background-color: #1096F5;
+    border: #1096F5;
+}

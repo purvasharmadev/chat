@@ -26,7 +26,7 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (userData.username || userData.password !== "") {
+    if (userData.username && userData.password !== "") {
       dispatch(
         login({ username: userData.username, password: userData.password })
       );
@@ -50,11 +50,11 @@ function Login() {
   }, [status]);
 
   return (
-    <div className="flex p-1 flex-space-center form-auth">
+    <div className="flex p-1 flex-space-center align-item-center border form-auth">
       <div className="input-container w-50">
         <h2 className="form-heading">Login</h2>
         <form onSubmit={handleSubmit} className="form-container">
-          <label htmlFor="username">username</label>
+          <label htmlFor="username">Username</label>
           <input
             value={userData.username}
             onChange={(e) =>
@@ -74,13 +74,13 @@ function Login() {
             name="password"
             placeholder="********"
           />
-          <button type="submit" className="btn btn-primary mb-1 ">
-            Login here!!
+          <button type="submit" className="btn btn-primary">
+            Login
           </button>
           <button
             onClick={() => guestLogin()}
             type="submit"
-            className="btn btn-secondary mb-1"
+            className="btn btn-secondary"
           >
             Login as Guest
           </button>
@@ -92,13 +92,13 @@ function Login() {
           </h4>
         </form>
       </div>
-      <div>
+      {/* <div>
         <img
           src="https://static.dw.com/image/59472921_303.jpg"
           className="img-responsive"
           alt="banner"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

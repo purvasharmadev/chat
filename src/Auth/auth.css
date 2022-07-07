@@ -1,7 +1,9 @@
 .input-container{
     max-width: 31.25rem;
 }
-
+div{
+    height: fit-content;
+}
 
 /* heading */
 .form-heading{
@@ -14,10 +16,11 @@
     color:var(--PRIMARY-COLOR);
     font-size: 1rem;
     font-weight: 600;
+    margin: 10px 1rem;
 }
 
 .form-container input{
-    margin-top: 0;
+    margin:10px 1rem;
 }
 
 /* remember-me and forgot you password link */
@@ -33,6 +36,9 @@
     padding-top: 1rem;
 }
 
+.form-container .btn{
+    margin: 10px 1rem;
+}
 
 /* Media Queries */
 @media (max-width:450px){

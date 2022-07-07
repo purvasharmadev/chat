@@ -49,6 +49,7 @@ div{
         flex-wrap: wrap;
         justify-content: center;
         margin-bottom: 10px;
+        width: 100%;
     }
 }
 @media (max-width:600px) {

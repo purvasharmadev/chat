@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
 import {signup,getAuth} from "../auth-slice"
+import account from "../../Assets/Images/account.svg";
 
 import {toast} from "react-toastify"
 
@@ -46,9 +47,15 @@ function Signin() {
   }, [status]);
 
   return (
-    <div className="flex p-1 flex-space-center form-auth">
-      <div className="input-container w-50">
-        <h2 className="form-heading">Signin</h2>
+    <div className="flex p-1 flex-space-center align-item-center h-100 form-auth">
+         <div className="w-50 flex flex-column  align-item-center p-1">
+        <img src={account} className="img-responsive" alt="bubble"/>
+        <p className="text-normal color-secondary">
+          Create your own bubble!
+        </p>
+      </div>
+      <div className="input-container w-50 p-1">
+        <h2 className="form-heading">Signup</h2>
         <form onSubmit={handleSubmit} className="form-container">
           <label htmlFor="fname">First Name</label>
           <input
@@ -92,7 +99,7 @@ function Signin() {
             placeholder="********"
           />
           <button type="submit" className="btn btn-primary ">
-            Signin
+            Signup
           </button>
           <h4>
             <Link to="/login" className="link color-primary">

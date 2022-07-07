@@ -1,5 +1,5 @@
 import "../auth.css";
-
+import logo from "../../Assets/Images/logo.png";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ function Login() {
     setUserData((prev) => ({
       ...prev,
       username: "guest",
-      password: "guest123",
+      password: "guest",
     }));
   };
 
@@ -50,8 +50,8 @@ function Login() {
   }, [status]);
 
   return (
-    <div className="flex p-1 flex-space-center align-item-center border form-auth">
-      <div className="input-container w-50">
+    <div className="flex p-1 h-100 align-item-center flex-space-center form-auth">
+      <div className="input-container w-50 p-1">
         <h2 className="form-heading">Login</h2>
         <form onSubmit={handleSubmit} className="form-container">
           <label htmlFor="username">Username</label>
@@ -92,13 +92,12 @@ function Login() {
           </h4>
         </form>
       </div>
-      {/* <div>
-        <img
-          src="https://static.dw.com/image/59472921_303.jpg"
-          className="img-responsive"
-          alt="banner"
-        />
-      </div> */}
+      <div className="w-50 flex flex-column  align-item-center p-1">
+        <img src={logo} className="img-responsive" alt="bubble"/>
+        <p className="text-normal color-secondary">
+          Share your thoughts around the world with bubble!
+        </p>
+      </div>
     </div>
   );
 }

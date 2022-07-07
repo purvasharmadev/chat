@@ -20,7 +20,7 @@ export const users = [
     firstName:"Guest",
     lastName:"User",
     username:"guest",
-    password:"guest123",
+    password:"guest",
     createdAt: formatDate(),
     updatedAt: formatDate(),
   }

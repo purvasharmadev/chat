@@ -40,7 +40,7 @@ export default function Navbar() {
             variant="h6"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            Navbar
+          <ForumIcon/>  Bubble
           </Typography>
           <ForumIcon sx={{ display: { xs: "block", sm: "none" } }} />
           <Avatar

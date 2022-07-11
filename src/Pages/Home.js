@@ -11,8 +11,8 @@ export default function Home() {
       <Navbar/>
       <Stack direction="row" spacing={2} justifyContent={"space-between"}>
       <Sidebar sx={{flex:2}}/>
-      <Feed sx={{flex:4}}/>
-      <Rightbar sx={{flex:3}}/>
+      <Feed sx={{flex:6}}/>
+      <Rightbar sx={{flex:1}}/>
       </Stack>
     </Box>
   );

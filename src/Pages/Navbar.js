@@ -12,9 +12,11 @@ import { useDispatch } from "react-redux";
 import { logout } from "../Auth/auth-slice";
 import { toast } from "react-toastify";
 import ForumIcon from "@mui/icons-material/Forum";
+import {getDataFromLocal} from "../Hooks/useLocalStorage"
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  let uname= getDataFromLocal("user","user profile")
 
   const [open, setOpen] = useState(false);
   const StyledToolbar = styled(Toolbar)({
@@ -44,7 +46,7 @@ export default function Navbar() {
           </Typography>
           <ForumIcon sx={{ display: { xs: "block", sm: "none" } }} />
           <Avatar
-            alt="Remy Sharp"
+            alt={uname.username.toUpperCase()}
             src="/static/images/avatar/1.jpg"
             onClick={(e) => setOpen(true)}
           />

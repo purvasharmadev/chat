@@ -14,7 +14,7 @@ function Feed() {
   }, []);
 
   return (
-    <Box flex={4} alignItems="center" justifyContent="center">
+    <Box flex={6} alignItems="center" justifyContent="center">
       {postError && <h1>{postError}</h1>}
       {postStatus === "post loading" && <h2>Loading.....</h2>}
       {post.length !== 0 &&
@@ -25,6 +25,8 @@ function Feed() {
               date={item.createdAt.split("T")[0]}
               username={item.username}
               content={item.content}
+              likeCount={item.likes.likeCount}
+              commentCount={item.comments.length}
             />
           );
         })}

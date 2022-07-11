@@ -2,8 +2,9 @@ import React from 'react'
 import {Card, CardContent, Typography, CardActions, IconButton,CardHeader,Avatar} from "@mui/material"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ForumIcon from '@mui/icons-material/Forum';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
-function Post({username,content,date}) {
+function Post({username,content,date,likeCount,commentCount}) {
   return (
     <Card className="m-1">
     <CardHeader
@@ -28,8 +29,18 @@ function Post({username,content,date}) {
       <IconButton aria-label="add to favorites">
         <FavoriteBorderIcon/>
       </IconButton>
-      <IconButton aria-label="share">
+      <Typography component="span" className="color-secondary text-small">
+          {likeCount}
+        </Typography>
+
+      <IconButton aria-label="comment">
         <ForumIcon/>
+      </IconButton>
+      <Typography component="span" className="color-secondary text-small">
+          {commentCount}
+        </Typography>
+      <IconButton aria-label="bookmark">
+      <BookmarkAddIcon/>
       </IconButton>
     </CardActions>
 </Card>

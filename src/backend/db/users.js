@@ -12,6 +12,7 @@ export const users = [
     lastName: "Balika",
     username: "adarshbalika",
     password: "adarshBalika123",
+    bio:"the most adarsh girl",
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
@@ -21,6 +22,7 @@ export const users = [
     lastName:"User",
     username:"guest",
     password:"guest",
+    bio:"i m just the guest",
     createdAt: formatDate(),
     updatedAt: formatDate(),
   }

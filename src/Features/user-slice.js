@@ -19,7 +19,7 @@ export const users = createAsyncThunk(
       return res.data
 
     } catch (userError) {
-      return thunkAPI.rejectWithValue(userError.response.data.userErrors[0]);
+      return thunkAPI.rejectWithValue(userError.response.data.errors[0]);
     }
   }
 );

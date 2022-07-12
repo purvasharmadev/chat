@@ -2,23 +2,19 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { getDataFromLocal } from "../Hooks/useLocalStorage";
 
-
 // intial state
 const intialStateValue = {
-  isLoggedIn: getDataFromLocal("isLoggedIn",false),
+  isLoggedIn: getDataFromLocal("isLoggedIn", false),
   status: "idle",
   error: null,
 };
-
-
 
 export const login = createAsyncThunk(
   "api/auth/login",
   async (userDetail, thunkAPI) => {
     try {
       const res = await axios.post("/api/auth/login", userDetail);
-      return   res.data
-
+      return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.errors[0]);
     }
@@ -46,13 +42,13 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: intialStateValue,
   reducers: {
-    loginState:(state,action)=>{
-      state.isLoggedIn=action.payload;
+    loginState: (state, action) => {
+      state.isLoggedIn = action.payload;
     },
     logout: (state, action) => {
       state.isLoggedIn = action.payload;
-      state.status='idle'
-      localStorage.clear()
+      state.status = "idle";
+      localStorage.clear();
     },
   },
   extraReducers(builder) {
@@ -63,7 +59,7 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload;
         state.status = "login succeded";
-        state.error=null;
+        state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.payload;
@@ -74,7 +70,7 @@ export const authSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state) => {
         state.status = "signup succeded";
-        state.error=null
+        state.error = null;
       })
       .addCase(signup.rejected, (state, action) => {
         state.status = "signup failed";

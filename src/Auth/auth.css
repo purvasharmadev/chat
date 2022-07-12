@@ -1,0 +1,64 @@
+.input-container{
+    max-width: 31.25rem;
+}
+div{
+    height: fit-content;
+}
+
+/* heading */
+.form-heading{
+    text-align: center;
+    padding: 0;
+    color: var(--PRIMARY-COLOR);
+}
+
+.form-container label{
+    color:var(--PRIMARY-COLOR);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 10px 1rem;
+}
+
+.form-container input{
+    margin:10px 1rem;
+}
+
+/* remember-me and forgot you password link */
+.form-container div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+}
+
+/* create-new-account heading */
+.form-container h4{
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.form-container .btn{
+    margin: 10px 1rem;
+}
+
+/* Media Queries */
+@media (max-width:450px){
+    .form-auth{
+        flex-wrap: wrap-reverse;
+    }
+    .form-container div{
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+}
+@media (max-width:600px) {
+    .form-auth{
+        flex-wrap: wrap-reverse;
+    }
+
+    .input-container{
+        width: 100%;
+        margin-top: 1rem;
+    }
+}

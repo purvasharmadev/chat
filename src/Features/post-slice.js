@@ -1,25 +1,42 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 // initial state
 const initialStateValue = {
   postStatus: "idle",
-  post:[],
+  post: [],
   postError: null,
 };
 
+export const posts = createAsyncThunk("getPosts", async (thunkAPI) => {
+  try {
+    const res = await axios.get("/api/posts");
+    return res.data;
+  } catch (postError) {
+    return thunkAPI.rejectWithValue(postError.response.data.errors[0]);
+  }
+});
 
-
-export const posts = createAsyncThunk(
-  "api/posts",
-  async (thunkAPI) => {
+export const addPosts = createAsyncThunk(
+  "addPost",
+  async ({ item, token }, thunkAPI) => {
     try {
-      const res = await axios.get("/api/posts");
-      return res.data
-
+      const res = await axios.post(
+        "/api/posts",
+        {
+          postData: {
+            content: item,
+          },
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return res.data;
     } catch (postError) {
-      return thunkAPI.rejectWithValue(postError.response.data.postErrors[0]);
+      return thunkAPI.rejectWithValue(postError.response.data.errors[0]);
     }
   }
 );
@@ -36,12 +53,24 @@ export const postSlice = createSlice({
       .addCase(posts.fulfilled, (state, action) => {
         state.post = action.payload;
         state.postStatus = "post succeded";
-        state.postError=null;
+        state.postError = null;
       })
       .addCase(posts.rejected, (state, action) => {
         state.postError = action.payload;
         state.postStatus = "post failed";
-      })},
+      })
+      .addCase(addPosts.pending, (state) => {
+        state.postStatus = "adding post";
+      })
+      .addCase(addPosts.fulfilled, (state, action) => {
+        state.post = action.payload;
+        state.postStatus = "post added";
+      })
+      .addCase(addPosts.rejected, (state, action) => {
+        state.postError = action.payload;
+        state.postStatus = "adding post failed";
+      });
+  },
 });
 
 export const getPost = (state) => state.post;

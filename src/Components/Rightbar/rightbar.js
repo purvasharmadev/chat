@@ -14,7 +14,7 @@ function Rightbar() {
 
   return (
     <Box flex={2} sx={{display:{xs:"none",sm:"block"}}}>
-      <Box position="fixed">
+      <Box position="fixed" color={"text.primary"}>
       <h4 className="text-left pl-1 mb-0 color-primary">Who to follow</h4>
       {userError && <h2>{userError}</h2>}
         {userStatus === "user loading" && <h2>Loading......</h2>}

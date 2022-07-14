@@ -12,13 +12,14 @@ import FeedIcon from "@mui/icons-material/Feed";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-function Sidebar() {
+function Sidebar({mode,setMode}) {
   return (
     <Box
       flex={1}
       sx={{ display: { xs: "none", sm: "block" } }}
     >
-      <Box position="fixed">
+      <Box position="fixed" color={"text.primary"}
+>
       <List>
         <ListItemButton>
           <ListItemIcon>
@@ -45,7 +46,11 @@ function Sidebar() {
           <ListItemIcon>
             <DarkModeIcon />
           </ListItemIcon>
-          <Switch defaultChecked />
+          <Switch 
+          onChange={e=>
+          setMode(mode==='dark'?'light':'dark') }
+          defaultChecked
+          />
         </ListItemButton>
       </List>
 

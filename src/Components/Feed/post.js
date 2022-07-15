@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { deletePost } from "../../Features/post-slice";
+import { useDispatch } from "react-redux";
 import {
   Card,
   CardContent,
@@ -19,7 +21,17 @@ import EditPost from "./editPost";
 
 function Post({ item, username, content, date, likeCount, commentCount }) {
   let uname = getDataFromLocal("user", "user profile");
+  const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
+
+  const deletePostHandler = (id) => {
+    dispatch(
+      deletePost({
+        id: id,
+        token: JSON.parse(localStorage.getItem("token")),
+      })
+    );
+  };
 
   return (
     <Card className="m-1">
@@ -80,7 +92,10 @@ function Post({ item, username, content, date, likeCount, commentCount }) {
             </Tooltip>
 
             <Tooltip title="Delete">
-              <IconButton aria-label="delete">
+              <IconButton
+                onClick={() => deletePostHandler(item._id)}
+                aria-label="delete"
+              >
                 <DeleteIcon />
               </IconButton>
             </Tooltip>

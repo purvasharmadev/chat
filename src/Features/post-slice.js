@@ -7,19 +7,15 @@ const initialStateValue = {
   post: [],
   postError: null,
 };
-
-
 //get post
 export const posts = createAsyncThunk("getPosts", async (thunkAPI) => {
   try {
     const res = await axios.get("/api/posts");
     return res.data;
-  } catch (postError) {
-    return thunkAPI.rejectWithValue(postError.response.data.errors[0]);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.errors[0])
   }
 });
-
-
 //add post
 export const addPosts = createAsyncThunk(
   "addPost",
@@ -48,7 +44,7 @@ export const addPosts = createAsyncThunk(
 // edit post
 export const editPosts = createAsyncThunk(
   "editPost",
-  async ({ item,id, token }, thunkAPI) => {
+  async ({ item, id, token }, thunkAPI) => {
     try {
       const res = await axios.post(
         `/api/posts/edit/${id}`,
@@ -66,7 +62,23 @@ export const editPosts = createAsyncThunk(
       return res.data;
     } catch (postError) {
       return thunkAPI.rejectWithValue(postError.response.data.errors[0]);
+    }
+  }
+);
 
+//delete post
+export const deletePost = createAsyncThunk(
+  "deletePost",
+  async ({ id, token }, thunkAPI) => {
+    try {
+      const res = await axios.delete(`/api/posts/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      return res.data;
+    } catch (postError) {
+      return thunkAPI.rejectWithValue(postError.response.data.errors[0]);
     }
   }
 );
@@ -77,7 +89,7 @@ export const postSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-    //post
+      //post
       .addCase(posts.pending, (state) => {
         state.postStatus = "post loading";
       })
@@ -88,7 +100,7 @@ export const postSlice = createSlice({
       })
       .addCase(posts.rejected, (state, action) => {
         state.postError = action.payload;
-        state.postStatus = "post failed";
+        state.postStatus = "failed";
       })
       //add post
       .addCase(addPosts.pending, (state) => {
@@ -100,7 +112,7 @@ export const postSlice = createSlice({
       })
       .addCase(addPosts.rejected, (state, action) => {
         state.postError = action.payload;
-        state.postStatus = "adding post failed";
+        state.postStatus = "failed";
       })
       //edit post
       .addCase(editPosts.pending, (state) => {
@@ -112,7 +124,19 @@ export const postSlice = createSlice({
       })
       .addCase(editPosts.rejected, (state, action) => {
         state.postError = action.payload;
-        state.postStatus = "edit post failed";
+        state.postStatus = "failed";
+      })
+      //delete post
+      .addCase(deletePost.pending, (state) => {
+        state.postStatus = "deleting post";
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.post = action.payload;
+        state.postStatus = "post deleted";
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.postError = action.payload;
+        state.postStatus = "failed";
       });
   },
 });

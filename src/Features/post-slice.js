@@ -8,6 +8,8 @@ const initialStateValue = {
   postError: null,
 };
 
+
+//get post
 export const posts = createAsyncThunk("getPosts", async (thunkAPI) => {
   try {
     const res = await axios.get("/api/posts");
@@ -17,6 +19,8 @@ export const posts = createAsyncThunk("getPosts", async (thunkAPI) => {
   }
 });
 
+
+//add post
 export const addPosts = createAsyncThunk(
   "addPost",
   async ({ item, token }, thunkAPI) => {
@@ -41,12 +45,39 @@ export const addPosts = createAsyncThunk(
   }
 );
 
+// edit post
+export const editPosts = createAsyncThunk(
+  "editPost",
+  async ({ item,id, token }, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        `/api/posts/edit/${id}`,
+        {
+          postData: {
+            content: item,
+          },
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (postError) {
+      return thunkAPI.rejectWithValue(postError.response.data.errors[0]);
+
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
   initialState: initialStateValue,
   reducers: {},
   extraReducers(builder) {
     builder
+    //post
       .addCase(posts.pending, (state) => {
         state.postStatus = "post loading";
       })
@@ -59,6 +90,7 @@ export const postSlice = createSlice({
         state.postError = action.payload;
         state.postStatus = "post failed";
       })
+      //add post
       .addCase(addPosts.pending, (state) => {
         state.postStatus = "adding post";
       })
@@ -69,6 +101,18 @@ export const postSlice = createSlice({
       .addCase(addPosts.rejected, (state, action) => {
         state.postError = action.payload;
         state.postStatus = "adding post failed";
+      })
+      //edit post
+      .addCase(editPosts.pending, (state) => {
+        state.postStatus = "editing post";
+      })
+      .addCase(editPosts.fulfilled, (state, action) => {
+        state.post = action.payload;
+        state.postStatus = "post edited";
+      })
+      .addCase(editPosts.rejected, (state, action) => {
+        state.postError = action.payload;
+        state.postStatus = "edit post failed";
       });
   },
 });

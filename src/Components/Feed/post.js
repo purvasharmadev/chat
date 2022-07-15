@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -15,9 +15,11 @@ import ForumIcon from "@mui/icons-material/Forum";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditPost from "./editPost";
 
-function Post({ username, content, date, likeCount, commentCount }) {
+function Post({ item, username, content, date, likeCount, commentCount }) {
   let uname = getDataFromLocal("user", "user profile");
+  const [edit, setEdit] = useState(false);
 
   return (
     <Card className="m-1">
@@ -30,13 +32,18 @@ function Post({ username, content, date, likeCount, commentCount }) {
         title={username}
         subheader={date}
       />
+      {edit ? (
+        <CardContent>
+          <EditPost content={content} id={item._id} setEdit={setEdit} />
+        </CardContent>
+      ) : (
+        <CardContent>
+          <Typography variant="body2" color="text.primary">
+            {content}
+          </Typography>
+        </CardContent>
+      )}
 
-      <CardContent>
-        <Typography variant="body2" color="text.primary">
-          {content}
-        </Typography>
-      </CardContent>
-      
       <CardActions disableSpacing>
         <Tooltip title="like">
           <IconButton aria-label="add to favorites">
@@ -67,7 +74,7 @@ function Post({ username, content, date, likeCount, commentCount }) {
         {username === uname.username && (
           <>
             <Tooltip title="edit">
-              <IconButton aria-label="edit">
+              <IconButton onClick={() => setEdit(true)} aria-label="edit">
                 <EditIcon />
               </IconButton>
             </Tooltip>

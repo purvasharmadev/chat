@@ -8,7 +8,6 @@ import AddPost from "./addPost";
 function Feed() {
   const { postStatus, postError, post } = useSelector(getPost);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(posts());
     // eslint-disable-next-line
@@ -24,6 +23,7 @@ function Feed() {
           post.posts.map((item) => {
             return (
               <Post
+               item={item}
                 key={item._id}
                 date={item.createdAt.split("T")[0]}
                 username={item.username}

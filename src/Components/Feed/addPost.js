@@ -29,7 +29,7 @@ function AddPost() {
       });
     } else {
       toast.warning("Please fill all the fields", {
-        toastId: "add-post-failed",
+        toastId: "empty-field-failed",
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });    }

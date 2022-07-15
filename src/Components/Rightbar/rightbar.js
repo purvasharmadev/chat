@@ -19,9 +19,9 @@ function Rightbar() {
       {userError && <h2>{userError}</h2>}
         {userStatus === "user loading" && <h2>Loading......</h2>}
         {user.users &&
-          user.users.map((item)=>{
+          user.users.map((item,index)=>{
             return(
-              <User fname={item.firstName} lname={item.lastName} bio={item.bio} uname={item.username}/>
+              <User key={index} fname={item.firstName} lname={item.lastName} bio={item.bio} uname={item.username}/>
             )
           })}
       </Box>

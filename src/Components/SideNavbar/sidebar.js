@@ -1,4 +1,7 @@
 import React from "react";
+import {getPost,allPost,posts} from "../../Features/post-slice";
+import { getAuth } from "../../Auth/auth-slice";
+import {useSelector,useDispatch} from "react-redux"
 import {
   Box,
   List,
@@ -13,6 +16,15 @@ import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 function Sidebar({mode,setMode}) {
+  const {post } = useSelector(getPost)
+  const {user} = useSelector(getAuth)
+  const dispatch = useDispatch()
+
+  const myFeed = ()=>{
+    let newPost = post.posts.filter((i)=>i.username === user.username)
+    return {posts:newPost}
+  }
+
   return (
     <Box
       flex={1}
@@ -21,14 +33,14 @@ function Sidebar({mode,setMode}) {
       <Box position="fixed" color={"text.primary"}
 >
       <List>
-        <ListItemButton>
+        <ListItemButton onClick={()=>dispatch(posts())}>
           <ListItemIcon>
             <ExploreIcon />
           </ListItemIcon>
           <ListItemText primary="Explore" />
         </ListItemButton>
 
-        <ListItemButton>
+        <ListItemButton onClick={()=>dispatch(allPost(myFeed()))}>
           <ListItemIcon>
             <FeedIcon />
           </ListItemIcon>

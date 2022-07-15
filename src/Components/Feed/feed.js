@@ -22,8 +22,7 @@ function Feed() {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
-    }else{    console.log("postError ", postError)
-
+    }else{  
       toast.error(postError, {
         toastId: "error-failed",
         position: toast.POSITION.TOP_RIGHT,
@@ -36,7 +35,7 @@ function Feed() {
     <Box flex={6} alignItems="center" justifyContent="center">
       <AddPost />
       {postError && <h1>{postError}</h1>}
-      {postStatus === "post loading" && <h2>Loading.....</h2>}
+      {postStatus === "post loading" && <h2 className="text-center">Loading.....</h2>}
       <Stack direction="column-reverse">
         {post.length !== 0 &&
           post.posts.map((item) => {

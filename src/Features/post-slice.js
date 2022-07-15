@@ -86,7 +86,11 @@ export const deletePost = createAsyncThunk(
 export const postSlice = createSlice({
   name: "post",
   initialState: initialStateValue,
-  reducers: {},
+  reducers: {
+    allPost:(state,action)=>{
+      state.post = action.payload
+    }
+  },
   extraReducers(builder) {
     builder
       //post
@@ -142,4 +146,6 @@ export const postSlice = createSlice({
 });
 
 export const getPost = (state) => state.post;
+export const { allPost } = postSlice.actions;
+
 export default postSlice.reducer;

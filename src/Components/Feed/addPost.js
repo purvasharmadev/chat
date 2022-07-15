@@ -22,11 +22,6 @@ function AddPost() {
         })
       );
       setContent("");
-      toast.success("Successfully posted!!", {
-        toastId: "post-success",
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
-      });
     } else {
       toast.warning("Please fill all the fields", {
         toastId: "empty-field-failed",

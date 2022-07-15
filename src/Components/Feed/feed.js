@@ -4,6 +4,8 @@ import { getPost, posts } from "../../Features/post-slice";
 import { Box, Stack } from "@mui/material";
 import Post from "./post";
 import AddPost from "./addPost";
+import {toast} from "react-toastify"
+
 
 function Feed() {
   const { postStatus, postError, post } = useSelector(getPost);
@@ -12,6 +14,23 @@ function Feed() {
     dispatch(posts());
     // eslint-disable-next-line
   }, []);
+
+  useEffect(()=>{
+    if(postError === undefined){
+      toast.error("something went wrong!! try again later", {
+        toastId: "error-failed",
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }else{    console.log("postError ", postError)
+
+      toast.error(postError, {
+        toastId: "error-failed",
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      })
+    }
+  },[postError])
 
   return (
     <Box flex={6} alignItems="center" justifyContent="center">

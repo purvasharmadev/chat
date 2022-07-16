@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deletePost } from "../../Features/post-slice";
+import { deletePost, likePost, dislikePost } from "../../Features/post-slice";
 import { useDispatch } from "react-redux";
 import {
   Card,
@@ -17,13 +17,21 @@ import ForumIcon from "@mui/icons-material/Forum";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import EditPost from "./editPost";
 
-function Post({ item, username, content, date, likeCount, commentCount }) {
+function Post({
+  item,
+  username,
+  content,
+  date,
+  likeCount,
+  likedBy,
+  commentCount,
+}) {
   let uname = getDataFromLocal("user", "user profile");
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
-
   const deletePostHandler = (id) => {
     dispatch(
       deletePost({
@@ -33,6 +41,23 @@ function Post({ item, username, content, date, likeCount, commentCount }) {
     );
   };
 
+  const likePostHandler = (id) => {
+    dispatch(
+      likePost({
+        id: id,
+        token: JSON.parse(localStorage.getItem("token")),
+      })
+    );
+  };
+
+  const dislikePostHandler = (id) => {
+    dispatch(
+      dislikePost({
+        id: id,
+        token: JSON.parse(localStorage.getItem("token")),
+      })
+    );
+  };
   return (
     <Card className="m-1">
       <CardHeader
@@ -57,15 +82,36 @@ function Post({ item, username, content, date, likeCount, commentCount }) {
       )}
 
       <CardActions disableSpacing>
-        <Tooltip title="like">
-          <IconButton aria-label="add to favorites">
-            <FavoriteBorderIcon />
-          </IconButton>
-        </Tooltip>
+        {likedBy.findIndex((i) => i.username === uname.username) === -1 ? (
+          <>
+            <Tooltip title="like">
+              <IconButton
+                onClick={() => likePostHandler(item._id)}
+                aria-label="add to favorites"
+              >
+                <FavoriteBorderIcon />
+              </IconButton>
+            </Tooltip>
+            <Typography component="span" className="color-secondary text-small">
+              {likeCount}
+            </Typography>{" "}
+          </>
+        ) : (
+          <>
+            <Tooltip title="dislike">
+              <IconButton
+                onClick={() => dislikePostHandler(item._id)}
+                aria-label="add to favorites"
+              >
+                <FavoriteIcon sx={{ color: "red" }} />
+              </IconButton>
+            </Tooltip>
 
-        <Typography component="span" className="color-secondary text-small">
-          {likeCount}
-        </Typography>
+            <Typography component="span" className="color-secondary text-small">
+              {likeCount}
+            </Typography>
+          </>
+        )}
 
         <Tooltip title="comment">
           <IconButton aria-label="comment">

@@ -34,7 +34,6 @@ function Feed() {
   return (
     <Box flex={6} alignItems="center" justifyContent="center">
       <AddPost />
-      {postError && <h1>{postError}</h1>}
       {postStatus === "post loading" && <h2 className="text-center">Loading.....</h2>}
       <Stack direction="column-reverse">
         {post.length !== 0 &&
@@ -47,6 +46,7 @@ function Feed() {
                 username={item.username}
                 content={item.content}
                 likeCount={item.likes.likeCount}
+                likedBy={item.likes.likedBy}
                 commentCount={item.comments && item.comments.length}
               />
             );

@@ -13,7 +13,7 @@ export const posts = createAsyncThunk("getPosts", async (thunkAPI) => {
     const res = await axios.get("/api/posts");
     return res.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.errors[0])
+    return thunkAPI.rejectWithValue(error.response.data.errors[0]);
   }
 });
 //add post
@@ -83,13 +83,55 @@ export const deletePost = createAsyncThunk(
   }
 );
 
+//like post
+export const likePost = createAsyncThunk(
+  "likePost",
+  async ({ id, token }, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        `/api/posts/like/${id}`,
+        {},
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (postError) {
+      return thunkAPI.rejectWithValue(postError.response.data.errors[0]);
+    }
+  }
+);
+
+//dislike post
+export const dislikePost = createAsyncThunk(
+  "dislikePost",
+  async ({ id, token }, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        `/api/posts/dislike/${id}`,
+        {},
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (postError) {
+      return thunkAPI.rejectWithValue(postError.response.data.errors[0]);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
   initialState: initialStateValue,
   reducers: {
-    allPost:(state,action)=>{
-      state.post = action.payload
-    }
+    allPost: (state, action) => {
+      state.post = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -139,6 +181,30 @@ export const postSlice = createSlice({
         state.postStatus = "post deleted";
       })
       .addCase(deletePost.rejected, (state, action) => {
+        state.postError = action.payload;
+        state.postStatus = "failed";
+      })
+      //like post
+      .addCase(likePost.pending, (state) => {
+        state.postStatus = "liking post";
+      })
+      .addCase(likePost.fulfilled, (state, action) => {
+        state.post = action.payload;
+        state.postStatus = "post liked";
+      })
+      .addCase(likePost.rejected, (state, action) => {
+        state.postError = action.payload;
+        state.postStatus = "failed";
+      })
+      //dislike post
+      .addCase(dislikePost.pending, (state) => {
+        state.postStatus = "liking post";
+      })
+      .addCase(dislikePost.fulfilled, (state, action) => {
+        state.post = action.payload;
+        state.postStatus = "post liked";
+      })
+      .addCase(dislikePost.rejected, (state, action) => {
         state.postError = action.payload;
         state.postStatus = "failed";
       });

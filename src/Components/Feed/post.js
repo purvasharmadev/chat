@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { deletePost, likePost, dislikePost } from "../../Features/post-slice";
 import { useDispatch } from "react-redux";
 import {
@@ -32,6 +33,8 @@ function Post({
   let uname = getDataFromLocal("user", "user profile");
   const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
+  const navigateTo = useNavigate()
+
   const deletePostHandler = (id) => {
     dispatch(
       deletePost({
@@ -39,6 +42,7 @@ function Post({
         token: JSON.parse(localStorage.getItem("token")),
       })
     );
+    navigateTo("/")
   };
 
   const likePostHandler = (id) => {
@@ -50,6 +54,7 @@ function Post({
     );
   };
 
+
   const dislikePostHandler = (id) => {
     dispatch(
       dislikePost({
@@ -58,6 +63,7 @@ function Post({
       })
     );
   };
+
   return (
     <Card className="m-1">
       <CardHeader
@@ -69,17 +75,18 @@ function Post({
         title={username}
         subheader={date}
       />
+      <CardContent>
       {edit ? (
-        <CardContent>
+        
           <EditPost content={content} id={item._id} setEdit={setEdit} />
-        </CardContent>
       ) : (
-        <CardContent>
           <Typography variant="body2" color="text.primary">
             {content}
           </Typography>
-        </CardContent>
       )}
+      
+      </CardContent>
+
 
       <CardActions disableSpacing>
         {likedBy.findIndex((i) => i.username === uname.username) === -1 ? (
@@ -114,7 +121,9 @@ function Post({
         )}
 
         <Tooltip title="comment">
-          <IconButton aria-label="comment">
+          <IconButton onClick={()=>{
+            navigateTo(`/comment/${item._id}`) 
+          }} aria-label="comment">
             <ForumIcon />
           </IconButton>
         </Tooltip>

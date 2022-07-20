@@ -47,7 +47,7 @@ function Feed() {
                 content={item.content}
                 likeCount={item.likes.likeCount}
                 likedBy={item.likes.likedBy}
-                commentCount={item.comments && item.comments.length}
+                commentCount={item.comments.length}
               />
             );
           })}

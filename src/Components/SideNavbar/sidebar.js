@@ -1,4 +1,5 @@
 import React from "react";
+import {Link,useNavigate} from "react-router-dom"
 import {getPost,allPost,posts} from "../../Features/post-slice";
 import { getAuth } from "../../Auth/auth-slice";
 import {useSelector,useDispatch} from "react-redux"
@@ -19,6 +20,7 @@ function Sidebar({mode,setMode}) {
   const {post } = useSelector(getPost)
   const {user} = useSelector(getAuth)
   const dispatch = useDispatch()
+  const navigateTo = useNavigate()
 
   const myFeed = ()=>{
     let newPost = post.posts.filter((i)=>i.username === user.username)
@@ -33,12 +35,13 @@ function Sidebar({mode,setMode}) {
       <Box position="fixed" color={"text.primary"}
 >
       <List>
-        <ListItemButton onClick={()=>dispatch(posts())}>
-          <ListItemIcon>
+        <ListItemButton onClick={()=> navigateTo('/')}>
+         <ListItemIcon>
             <ExploreIcon />
           </ListItemIcon>
-          <ListItemText primary="Explore" />
+          <ListItemText primary="Explore"  />
         </ListItemButton>
+
 
         <ListItemButton onClick={()=>dispatch(allPost(myFeed()))}>
           <ListItemIcon>

@@ -34,11 +34,11 @@ function App() {
   });
   return (
     <ThemeProvider theme={darkTheme}>
-      <Box bgcolor={"background.default"} color={"white"} style={{height:"100%"}} className="border">
+      <Box bgcolor={"background.default"} color={"white"} style={{height:"100%"}}>
         {login ? (
           <>
             <Navbar />
-            <Stack direction="row" spacing={2} justifyContent={"space-between"}>
+            <Stack direction="row" spacing={2} justifyContent={"space-between"} style={{height:"100%"}}>
               <Sidebar mode={mode} setMode={setMode} sx={{ flex: 2 }} />
               <URLRoutes />
               <Rightbar sx={{ flex: 1 }} />

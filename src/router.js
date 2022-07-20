@@ -14,6 +14,7 @@ import { RestrictedRoute } from "./Auth/AuthRoutes/RestrictedRoutes";
 // pages
 import Home from "./Pages/Home";
 import CommentPage from "./Pages/commentPage";
+import Bookmark from "./Pages/Bookmark";
 import { Login } from "./Auth/Login/login";
 import { Signin } from "./Auth/Signup/signup";
 import { PageNotFound } from "./Pages/PageNotFound";
@@ -37,6 +38,7 @@ export default function URLRoutes() {
       <Route exact path="/" element={<PrivateRoute login={isLoggedIn} />}>
         <Route path="/" element={<Home />} />
         <Route path="/comment/:id" element={<CommentPage />} />
+        <Route path="/bookmark" element={<Bookmark/>}/>
       </Route>
 
       {/* Resticted Route */}

@@ -192,7 +192,7 @@ export const deletePostCommentHandler = function (schema, request) {
  * send POST Request at /api/comments/upvote/:postId/:commentId
  * */
 
-export const upvotePostCommentHandler = function (schema, request) {
+ export const upvotePostCommentHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
   try {
     if (!user) {

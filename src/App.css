@@ -8,12 +8,18 @@
     --BACKGROUND-COLOR:#242526;
     --BACKGROUND-LIGHT:#F0F2F5;
     --TEXT-COLOR:#E2E3E8;
-    font-size: 15px;
+
+}
+
+
+div{
+    height:auto;
 }
 
 .h-100{
     height: 100vh;
 }
+
 .App{
     background-color: var(--BACKGROUND-LIGHT);
 }

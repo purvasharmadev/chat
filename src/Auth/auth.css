@@ -1,9 +1,6 @@
 .input-container{
     max-width: 31.25rem;
 }
-div{
-    height: fit-content;
-}
 
 /* heading */
 .form-heading{
@@ -42,23 +39,30 @@ div{
 
 /* Media Queries */
 @media (max-width:450px){
+    .h-100{
+        height: 100%;
+    }
     .form-auth{
         flex-wrap: wrap-reverse;
     }
     .form-container div{
         flex-wrap: wrap;
         justify-content: center;
-        margin-bottom: 10px;
         width: 100%;
     }
 }
 @media (max-width:600px) {
+    .h-100{
+        height: 100%;
+    }
+    .w-50{
+        width: 100%;
+    }
     .form-auth{
         flex-wrap: wrap-reverse;
     }
 
     .input-container{
         width: 100%;
-        margin-top: 1rem;
     }
 }

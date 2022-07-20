@@ -5,6 +5,7 @@ import axios from "axios";
 const initialStateValue = {
   postStatus: "idle",
   post: [],
+  singlePost:[],
   postError: null,
 };
 //get post
@@ -16,6 +17,20 @@ export const posts = createAsyncThunk("getPosts", async (thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data.errors[0]);
   }
 });
+
+//get post by id
+export const postsById = createAsyncThunk(
+  "getPostsById",
+  async (id, thunkAPI) => {
+    try {
+      const res = await axios.get(`/api/posts/${id}`);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.errors[0]);
+    }
+  }
+);
+
 //add post
 export const addPosts = createAsyncThunk(
   "addPost",
@@ -25,6 +40,7 @@ export const addPosts = createAsyncThunk(
         "/api/posts",
         {
           postData: {
+            comments: [],
             content: item,
           },
         },
@@ -135,7 +151,7 @@ export const postSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      //post
+      //get post
       .addCase(posts.pending, (state) => {
         state.postStatus = "post loading";
       })
@@ -145,6 +161,19 @@ export const postSlice = createSlice({
         state.postError = null;
       })
       .addCase(posts.rejected, (state, action) => {
+        state.postError = action.payload;
+        state.postStatus = "failed";
+      })
+      //get post by id
+      .addCase(postsById.pending, (state) => {
+        state.postStatus = "single post loading";
+      })
+      .addCase(postsById.fulfilled, (state, action) => {
+        state.singlePost = action.payload;
+        state.postStatus = "single post succeded";
+        state.postError = null;
+      })
+      .addCase(postsById.rejected, (state, action) => {
         state.postError = action.payload;
         state.postStatus = "failed";
       })

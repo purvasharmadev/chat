@@ -48,6 +48,7 @@ export const authSlice = createSlice({
     logout: (state, action) => {
       state.isLoggedIn = action.payload;
       state.status = "idle";
+      state.error=null;
       localStorage.clear();
     },
   },

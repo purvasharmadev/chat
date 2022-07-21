@@ -18,8 +18,8 @@ function Rightbar() {
       <h4 className="text-left pl-1 mb-0 color-primary">Who to follow</h4>
       {userError && <h2>{userError}</h2>}
         {userStatus === "user loading" && <h2>Loading......</h2>}
-        {user.users &&
-          user.users.map((item,index)=>{
+        {user &&
+          user.map((item,index)=>{
             return(
               <User key={index} fname={item.firstName} lname={item.lastName} bio={item.bio} uname={item.username}/>
             )

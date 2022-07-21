@@ -73,7 +73,6 @@ function Comments({ username, id }) {
 
   //edit a comment
   const editCommentHandler = (commentId, postId, text) => {
-    console.log("cliked ", commentId);
     dispatch(
       editComments({
         commentId: commentId,

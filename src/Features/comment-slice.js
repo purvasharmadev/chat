@@ -13,7 +13,6 @@ export const comments = createAsyncThunk("getComment", async (id, thunkAPI) => {
     const res = await axios.get(`/api/comments/${id}`);
     return res.data;
   } catch (error) {
-    console.log("error ", error);
     return thunkAPI.rejectWithValue(error.response.data.errors[0]);
   }
 });
@@ -68,7 +67,6 @@ export const editComments = createAsyncThunk(
 export const deleteComments = createAsyncThunk(
   "deleteComments",
   async ({ commentId, postId, token }, thunkAPI) => {
-    console.log("commentID ", commentId, " ", "postId ", postId);
     try {
       const res = await axios.delete(
         `/api/comments/delete/${postId}/${commentId}`,
@@ -80,7 +78,6 @@ export const deleteComments = createAsyncThunk(
       );
       return res.data;
     } catch (CommentsError) {
-      alert(CommentsError);
       return thunkAPI.rejectWithValue(CommentsError.response.data.errors[0]);
     }
   }
@@ -90,7 +87,6 @@ export const deleteComments = createAsyncThunk(
 export const upvoteComments = createAsyncThunk(
   "upvoteComments",
   async ({ commentId, postId, token }, thunkAPI) => {
-    console.log("commentID ", commentId, " ", "postId ", postId, " ", token);
 
     try {
       const res = await axios.post(
@@ -104,7 +100,6 @@ export const upvoteComments = createAsyncThunk(
       );
       return res.data;
     } catch (CommentsError) {
-      alert(CommentsError);
       return thunkAPI.rejectWithValue(CommentsError.response.data.errors[0]);
     }
   }
@@ -114,7 +109,6 @@ export const upvoteComments = createAsyncThunk(
 export const downvoteComments = createAsyncThunk(
   "downvoteComments",
   async ({ commentId, postId, token }, thunkAPI) => {
-    console.log("commentID ", commentId, " ", "postId ", postId, " ", token);
     try {
       const res = await axios.post(
         `/api/comments/downvote/${postId}/${commentId}`,{},
@@ -126,7 +120,6 @@ export const downvoteComments = createAsyncThunk(
       );
       return res.data;
     } catch (CommentsError) {
-      alert(CommentsError);
       return thunkAPI.rejectWithValue(CommentsError.response.data.errors[0]);
     }
   }

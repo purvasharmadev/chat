@@ -4,8 +4,7 @@ import { getPost, posts } from "../../Features/post-slice";
 import { Box, Stack } from "@mui/material";
 import Post from "./post";
 import AddPost from "./addPost";
-import {toast} from "react-toastify"
-
+import { toast } from "react-toastify";
 
 function Feed() {
   const { postStatus, postError, post } = useSelector(getPost);
@@ -15,32 +14,34 @@ function Feed() {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(()=>{
-    if(postError === undefined){
+  useEffect(() => {
+    if (postError === undefined) {
       toast.error("something went wrong!! try again later", {
         toastId: "error-failed",
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
-    }else{  
+    } else {
       toast.error(postError, {
         toastId: "error-failed",
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
-      })
+      });
     }
-  },[postError])
+  }, [postError]);
 
   return (
     <Box flex={6} alignItems="center" justifyContent="center">
       <AddPost />
-      {postStatus === "post loading" && <h2 className="text-center">Loading.....</h2>}
+      {postStatus === "post loading" && (
+        <h2 className="text-center">Loading.....</h2>
+      )}
       <Stack direction="column-reverse">
         {post.length !== 0 &&
           post.posts.map((item) => {
             return (
               <Post
-               item={item}
+                item={item}
                 key={item._id}
                 date={item.createdAt.split("T")[0]}
                 username={item.username}

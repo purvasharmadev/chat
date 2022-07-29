@@ -48,7 +48,7 @@ export default function Navbar() {
           <ForumIcon sx={{ display: { xs: "block", sm: "none" } }} />
           <Avatar
             alt={uname.username.toUpperCase()}
-            src="/static/images/avatar/1.jpg"
+            src={uname.dp}
             onClick={(e) => setOpen(true)}
           />
         </StyledToolbar>

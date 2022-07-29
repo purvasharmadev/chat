@@ -21,7 +21,7 @@ function Rightbar() {
         {user &&
           user.map((item,index)=>{
             return(
-              <User key={index} fname={item.firstName} lname={item.lastName} bio={item.bio} uname={item.username}/>
+              <User key={index} id={item._id} img={item.dp} fname={item.firstName} lname={item.lastName} bio={item.bio} uname={item.username}/>
             )
           })}
       </Box>

@@ -1,6 +1,7 @@
 import React from "react";
 import {Link,useNavigate} from "react-router-dom"
 import {getPost,allPost,posts} from "../../Features/post-slice";
+import {getDataFromLocal} from "../../Hooks/useLocalStorage";
 import { getAuth } from "../../Auth/auth-slice";
 import {useSelector,useDispatch} from "react-redux"
 import {
@@ -21,6 +22,7 @@ function Sidebar({mode,setMode}) {
   const {user} = useSelector(getAuth)
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
+  const currUser = getDataFromLocal('user', 'user')
 
   const myFeed = ()=>{
     let newPost = post.posts.filter((i)=>i.username === user.username)
@@ -56,6 +58,14 @@ function Sidebar({mode,setMode}) {
           </ListItemIcon>
           <ListItemText primary="Bookmarks" />
         </ListItemButton>
+
+        <ListItemButton onClick={()=>navigateTo(`/profile/${currUser._id}`)}>
+          <ListItemIcon>
+            <BookmarksIcon />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
+        </ListItemButton>
+
 
         <ListItemButton>
           <ListItemIcon>

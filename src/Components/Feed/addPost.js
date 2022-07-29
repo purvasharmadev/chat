@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Stack, Avatar, Input, Button, Card } from "@mui/material";
+import { Box, Stack, Avatar, Button, Card } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { addPosts } from "../../Features/post-slice";
@@ -43,9 +43,9 @@ function AddPost() {
           alignItems="center"
           justifyContent="center"
         >
-          <Avatar sx={{ bgcolor: "red" }} aria-label="avatar">
-          {uname.username.slice()[0].toUpperCase()}
-          </Avatar>
+          <Avatar src={uname.dp}
+          alt={uname.username.slice()[0].toUpperCase()}
+           aria-label="avatar" />
           <TextareaAutosize
             aria-label="minimum height"
             onChange={changeHandler}

@@ -9,8 +9,30 @@ import {
   Button,
 } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { useNavigate } from "react-router-dom";
+import { followUser, unfollowUser, getUser } from "../../Features/user-slice";
+import { useDispatch, useSelector } from "react-redux";
 
-function User({ fname, lname, bio, uname, img }) {
+function User({ fname, lname, bio, uname, img, id }) {
+  const navigateTo = useNavigate();
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector(getUser);
+  const followHandler = (id) => {
+    dispatch(
+      followUser({
+        id: id,
+        token: JSON.parse(localStorage.getItem("token")),
+      })
+    );
+  };
+  const unfollowHandler = (id) => {
+    dispatch(
+      unfollowUser({
+        id: id,
+        token: JSON.parse(localStorage.getItem("token")),
+      })
+    );
+  };
   return (
     <List alignItems="center">
       <ListItem
@@ -28,6 +50,10 @@ function User({ fname, lname, bio, uname, img }) {
                 sx={{ display: "inline" }}
                 component="span"
                 color="text.secondary"
+                onClick={() => {
+                  navigateTo(`/profile/${id}`);
+                }}
+                className="cursor-pointer"
               >
                 {`@${uname}`}
               </Typography>
@@ -44,13 +70,25 @@ function User({ fname, lname, bio, uname, img }) {
                 {bio}
               </Typography>
               <Typography component="span" sx={{ display: "block" }}>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  endIcon={<PersonAddIcon />}
-                >
-                  Follow
-                </Button>
+                {userInfo.following.findIndex((i) => i._id === id) === -1 ? (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    endIcon={<PersonAddIcon />}
+                    onClick={() => followHandler(id)}
+                  >
+                    Follow
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    endIcon={<PersonAddIcon />}
+                    onClick={() => unfollowHandler(id)}
+                  >
+                    UnFollow
+                  </Button>
+                )}
               </Typography>
             </React.Fragment>
           }

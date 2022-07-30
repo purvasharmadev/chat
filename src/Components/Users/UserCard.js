@@ -23,15 +23,13 @@ function UserCard({
   const dispatch = useDispatch();
   const uname = getDataFromLocal("user", '');
   const [editProfile, setEditProfile] = useState({
-    firstName: firstName,
-    lastName: lastName,
-    bio: bio,
-    url:url,
-    dp:dp,
+    firstName: uname.firstName,
+    lastName: uname.lastName,
+    bio: uname.bio,
+    url:uname.url,
+    dp:uname.dp,
   });
   const [edit, setEdit] = useState(false);
-
-  console.log("editProfile ", editProfile)
 
   const editHandler = () => {
     dispatch(

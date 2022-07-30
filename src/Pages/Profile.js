@@ -14,7 +14,6 @@ function Profile() {
       // eslint-disable-next-line
     },[id])
 
-    console.log("userInfo ", userInfo)
   return (
     <Box flex={6} className="h-100">
       {

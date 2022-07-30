@@ -25,7 +25,7 @@ function CommentPage() {
       flex={6}
       alignItems="center"
       justifyContent="center"
-      style={{ height: "100%" }}
+      style={{ minHeight: "100%" }}
     >
       <Box m={2}>
         <Fab
@@ -53,8 +53,9 @@ function CommentPage() {
               likeCount={singlePost.post.likes.likeCount}
               likedBy={singlePost.post.likes.likedBy}
               commentCount={singlePost.post.comments.length}
+              dp={singlePost.post.dp}
             />
-            <Comments id={id} username={singlePost.post.username} />
+            <Comments id={id} username={singlePost.post.username} dp={singlePost.post.dp} />
           </>
         )}
       </Stack>

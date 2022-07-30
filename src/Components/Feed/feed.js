@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPost, posts } from "../../Features/post-slice";
+import { getUser } from "../../Features/user-slice";
+
 import { Box, Stack } from "@mui/material";
 import Post from "./post";
 import AddPost from "./addPost";
@@ -8,6 +10,7 @@ import { toast } from "react-toastify";
 
 function Feed() {
   const { postStatus, postError, post } = useSelector(getPost);
+  const {user} = useSelector(getUser)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(posts());
@@ -49,6 +52,7 @@ function Feed() {
                 likeCount={item.likes.likeCount}
                 likedBy={item.likes.likedBy}
                 commentCount={item.comments.length}
+                dp={item.dp}
               />
             );
           })}

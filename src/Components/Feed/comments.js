@@ -34,7 +34,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDataFromLocal } from "../../Hooks/useLocalStorage";
 import { toast } from "react-toastify";
 
-function Comments({ username, id }) {
+function Comments({ username, id,dp }) {
   const [newComment, setNewComment] = useState("");
   const [editComment, setEditComment] = useState("");
   const [edit, setEdit] = useState({
@@ -132,10 +132,11 @@ function Comments({ username, id }) {
     <Box m={2}>
 
       <Stack direction="row" spacing={2} alignItems="center">
+ 
         <Avatar
           aria-label="avatar"
+          src={dp}
           alt={username.slice()[0].toUpperCase()}
-          src="/static/images/avatar/1.jpg"
           sx={{ width: 30, height: 30 }}
         ></Avatar>
         <Input
@@ -165,8 +166,9 @@ function Comments({ username, id }) {
                       <Avatar
                         aria-label="avatar"
                         sx={{ width: 30, height: 30 }}
+                       src={i.dp}
                       >
-                        {uname.username.slice()[0].toUpperCase()}
+                        {i.username.slice()[0].toUpperCase()}
                       </Avatar>
                     }
                     title={i.username}
@@ -206,7 +208,7 @@ function Comments({ username, id }) {
                               setEdit({
                                 ...edit,
                                 state: !edit.state,
-                                id: i._id,
+                                id: i._id
                               }),
                               setEditComment(i.commentData)
                             )}

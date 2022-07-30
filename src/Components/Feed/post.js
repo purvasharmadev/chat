@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { deletePost, likePost, dislikePost } from "../../Features/post-slice";
 import {
@@ -6,6 +6,7 @@ import {
   getUser,
   removeFromBookmark,
 } from "../../Features/user-slice";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
@@ -35,11 +36,13 @@ function Post({
   likeCount,
   likedBy,
   commentCount,
+  dp
 }) {
   let uname = getDataFromLocal("user", "user profile");
   let token = getDataFromLocal("token", null);
   const dispatch = useDispatch();
-  const { bookmark } = useSelector(getUser);
+
+  const { bookmark ,user} = useSelector(getUser);
   const [edit, setEdit] = useState(false);
   const navigateTo = useNavigate();
 
@@ -94,7 +97,7 @@ function Post({
     <Card className="m-1">
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor:"skyblue" }} aria-label="post">
+          <Avatar sx={{ bgcolor:"skyblue" }} src={dp} aria-label="post">
             {username.slice()[0].toUpperCase()}
           </Avatar>
         }

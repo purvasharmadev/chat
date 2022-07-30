@@ -9,6 +9,7 @@ import {
   Button,
 } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { useNavigate } from "react-router-dom";
 import { followUser, unfollowUser, getUser } from "../../Features/user-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,14 +62,6 @@ function User({ fname, lname, bio, uname, img, id }) {
           }
           secondary={
             <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                {bio}
-              </Typography>
               <Typography component="span" sx={{ display: "block" }}>
                 {userInfo.following.findIndex((i) => i._id === id) === -1 ? (
                   <Button
@@ -83,7 +76,7 @@ function User({ fname, lname, bio, uname, img, id }) {
                   <Button
                     variant="outlined"
                     size="small"
-                    endIcon={<PersonAddIcon />}
+                    endIcon={<PersonRemoveIcon />}
                     onClick={() => unfollowHandler(id)}
                   >
                     UnFollow

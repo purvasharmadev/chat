@@ -16,6 +16,7 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import FeedIcon from "@mui/icons-material/Feed";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import PersonIcon from '@mui/icons-material/Person';
 
 function Sidebar({mode,setMode}) {
   const {post } = useSelector(getPost)
@@ -61,7 +62,7 @@ function Sidebar({mode,setMode}) {
 
         <ListItemButton onClick={()=>navigateTo(`/profile/${currUser._id}`)}>
           <ListItemIcon>
-            <BookmarksIcon />
+            <PersonIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItemButton>

@@ -27,7 +27,6 @@ export const getUserById = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const res = await axios.get(`/api/users/${id}`);
-      console.log("res ", res.data.user);
       return res.data.user;
     } catch (userError) {
       console.error(userError);
@@ -52,6 +51,7 @@ export const editUser = createAsyncThunk(
           },
         }
       );
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       return res.data.user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.errors[0]);
@@ -132,7 +132,6 @@ export const followUser = createAsyncThunk(
           },
         }
       );
-      console.log("res ", res.data)
       return res.data;
     } catch (error) {
       console.error(error.response.data.errors[0]);
@@ -154,7 +153,6 @@ export const unfollowUser = createAsyncThunk(
           },
         }
       );
-      console.log("res unfollow", res.data)
       return res.data;
     } catch (error) {
       console.error(error.response.data.errors[0]);
@@ -187,7 +185,6 @@ export const userSlice = createSlice({
       })
       .addCase(getUserById.fulfilled, (state, action) => {
         state.userInfo = action.payload;
-        console.log("state.userInfo ", state.userInfo);
         state.userStatus = "user succeded";
         state.userError = null;
       })

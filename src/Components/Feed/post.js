@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deletePost, likePost, dislikePost } from "../../Features/post-slice";
-import { useDispatch } from "react-redux";
+import {
+  saveToBookmark,
+  getUser,
+  removeFromBookmark,
+} from "../../Features/user-slice";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
   CardContent,
@@ -15,7 +20,8 @@ import {
 import { getDataFromLocal } from "../../Hooks/useLocalStorage";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ForumIcon from "@mui/icons-material/Forum";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -31,35 +37,55 @@ function Post({
   commentCount,
 }) {
   let uname = getDataFromLocal("user", "user profile");
+  let token = getDataFromLocal("token", null);
   const dispatch = useDispatch();
+  const { bookmark } = useSelector(getUser);
   const [edit, setEdit] = useState(false);
-  const navigateTo = useNavigate()
+  const navigateTo = useNavigate();
+
 
   const deletePostHandler = (id) => {
     dispatch(
       deletePost({
         id: id,
-        token: JSON.parse(localStorage.getItem("token")),
+        token: token,
       })
     );
-    navigateTo("/")
+    navigateTo("/");
   };
 
   const likePostHandler = (id) => {
     dispatch(
       likePost({
         id: id,
-        token: JSON.parse(localStorage.getItem("token")),
+        token: token,
       })
     );
   };
-
 
   const dislikePostHandler = (id) => {
     dispatch(
       dislikePost({
         id: id,
-        token: JSON.parse(localStorage.getItem("token")),
+        token: token,
+      })
+    );
+  };
+
+  const saveToBookmarkHandler = (id) => {
+    dispatch(
+      saveToBookmark({
+        id: id,
+        token: token,
+      })
+    );
+  };
+
+  const removeFromBookmarkHandler = (id) => {
+    dispatch(
+      removeFromBookmark({
+        id: id,
+        token: token,
       })
     );
   };
@@ -68,7 +94,7 @@ function Post({
     <Card className="m-1">
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+          <Avatar sx={{ bgcolor:"skyblue" }} aria-label="post">
             {username.slice()[0].toUpperCase()}
           </Avatar>
         }
@@ -76,17 +102,14 @@ function Post({
         subheader={date}
       />
       <CardContent>
-      {edit ? (
-        
+        {edit ? (
           <EditPost content={content} id={item._id} setEdit={setEdit} />
-      ) : (
+        ) : (
           <Typography variant="body2" color="text.primary">
             {content}
           </Typography>
-      )}
-      
+        )}
       </CardContent>
-
 
       <CardActions disableSpacing>
         {likedBy.findIndex((i) => i.username === uname.username) === -1 ? (
@@ -121,9 +144,12 @@ function Post({
         )}
 
         <Tooltip title="comment">
-          <IconButton onClick={()=>{
-            navigateTo(`/comment/${item._id}`) 
-          }} aria-label="comment">
+          <IconButton
+            onClick={() => {
+              navigateTo(`/comment/${item._id}`);
+            }}
+            aria-label="comment"
+          >
             <ForumIcon />
           </IconButton>
         </Tooltip>
@@ -131,12 +157,25 @@ function Post({
         <Typography component="span" className="color-secondary text-small">
           {commentCount}
         </Typography>
-
-        <Tooltip title="save">
-          <IconButton aria-label="bookmark">
-            <BookmarkAddIcon />
-          </IconButton>
-        </Tooltip>
+        {bookmark.findIndex((i) => i === item._id) === -1 ? (
+          <Tooltip title="save">
+            <IconButton
+              onClick={() => saveToBookmarkHandler(item._id)}
+              aria-label="add bookmark"
+            >
+              <BookmarkBorderIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="remove from save">
+            <IconButton
+              onClick={() => removeFromBookmarkHandler(item._id)}
+              aria-label="remove bookmark"
+            >
+              <BookmarkIcon />
+            </IconButton>
+          </Tooltip>
+        )}
 
         {username === uname.username && (
           <>

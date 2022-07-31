@@ -50,7 +50,7 @@ function Sidebar({mode,setMode}) {
           <ListItemText primary="My Feed" />
         </ListItemButton>
 
-        <ListItemButton>
+        <ListItemButton onClick={()=>navigateTo('/bookmark')}>
           <ListItemIcon>
             <BookmarksIcon />
           </ListItemIcon>

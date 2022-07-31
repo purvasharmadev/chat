@@ -1,4 +1,8 @@
 import React from "react";
+import {Link,useNavigate} from "react-router-dom"
+import {getPost,allPost,posts} from "../../Features/post-slice";
+import { getAuth } from "../../Auth/auth-slice";
+import {useSelector,useDispatch} from "react-redux"
 import {
   Box,
   List,
@@ -12,22 +16,34 @@ import FeedIcon from "@mui/icons-material/Feed";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
-function Sidebar() {
+function Sidebar({mode,setMode}) {
+  const {post } = useSelector(getPost)
+  const {user} = useSelector(getAuth)
+  const dispatch = useDispatch()
+  const navigateTo = useNavigate()
+
+  const myFeed = ()=>{
+    let newPost = post.posts.filter((i)=>i.username === user.username)
+    return {posts:newPost}
+  }
+
   return (
     <Box
       flex={1}
       sx={{ display: { xs: "none", sm: "block" } }}
     >
-      <Box position="fixed">
+      <Box position="fixed" color={"text.primary"}
+>
       <List>
-        <ListItemButton>
-          <ListItemIcon>
+        <ListItemButton onClick={()=> navigateTo('/')}>
+         <ListItemIcon>
             <ExploreIcon />
           </ListItemIcon>
-          <ListItemText primary="Explore" />
+          <ListItemText primary="Explore"  />
         </ListItemButton>
 
-        <ListItemButton>
+
+        <ListItemButton onClick={()=>dispatch(allPost(myFeed()))}>
           <ListItemIcon>
             <FeedIcon />
           </ListItemIcon>
@@ -45,7 +61,11 @@ function Sidebar() {
           <ListItemIcon>
             <DarkModeIcon />
           </ListItemIcon>
-          <Switch defaultChecked />
+          <Switch 
+          onChange={e=>
+          setMode(mode==='dark'?'light':'dark') }
+          defaultChecked
+          />
         </ListItemButton>
       </List>
 

@@ -1,4 +1,4 @@
-import React, { useState,useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deletePost, likePost, dislikePost } from "../../Features/post-slice";
 import {
@@ -42,7 +42,7 @@ function Post({
   let token = getDataFromLocal("token", null);
   const dispatch = useDispatch();
 
-  const { bookmark ,user} = useSelector(getUser);
+  const { bookmark } = useSelector(getUser);
   const [edit, setEdit] = useState(false);
   const navigateTo = useNavigate();
 

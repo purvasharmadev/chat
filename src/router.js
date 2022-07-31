@@ -16,9 +16,11 @@ import Home from "./Pages/Home";
 import CommentPage from "./Pages/commentPage";
 import Bookmark from "./Pages/Bookmark";
 import Profile from "./Pages/Profile";
+import UserFeed from "./Pages/UserFeed";
 import { Login } from "./Auth/Login/login";
 import { Signin } from "./Auth/Signup/signup";
 import { PageNotFound } from "./Pages/PageNotFound";
+import Trending from "./Pages/Trending";
 
 export default function URLRoutes() {
   const { status, isLoggedIn } = useSelector(getAuth);
@@ -40,6 +42,8 @@ export default function URLRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/comment/:id" element={<CommentPage />} />
         <Route path="/bookmark" element={<Bookmark/>}/>
+        <Route path="/trending" element={<Trending/>}/>
+        <Route path="/user-feed" element={<UserFeed/>}/>
         <Route path="/profile/:id" element={<Profile/>}/>
       </Route>
 

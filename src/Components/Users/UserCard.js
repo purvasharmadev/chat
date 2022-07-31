@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { Stack, Badge, Avatar, Box, IconButton, Input, Button } from "@mui/material";
+import {
+  Stack,
+  Badge,
+  Box,
+  IconButton,
+  Input,
+  Button,
+} from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LinkIcon from "@mui/icons-material/Link";
 import EditIcon from "@mui/icons-material/Edit";
 import { getDataFromLocal } from "../../Hooks/useLocalStorage";
 import { editUser } from "../../Features/user-slice";
 import { useDispatch } from "react-redux";
-import { styled } from "@mui/material/styles";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 function UserCard({
@@ -21,15 +27,16 @@ function UserCard({
   url,
 }) {
   const dispatch = useDispatch();
-  const uname = getDataFromLocal("user", '');
+  const uname = getDataFromLocal("user", "");
   const [editProfile, setEditProfile] = useState({
     firstName: uname.firstName,
     lastName: uname.lastName,
     bio: uname.bio,
-    url:uname.url,
-    dp:uname.dp,
+    url: uname.url,
+    dp: uname.dp,
   });
   const [edit, setEdit] = useState(false);
+
 
   const editHandler = () => {
     dispatch(
@@ -41,11 +48,12 @@ function UserCard({
     setEdit(false);
   };
 
-  const SmallAvatar = styled(Avatar)(({ theme }) => ({
-    width: 22,
-    height: 22,
-    border: `2px solid ${theme.palette.background.paper}`,
-  }));
+  const imageUpload = (file) => {
+    setEditProfile((prev) => ({
+      ...prev,
+      dp: file,
+    }));
+  };
 
   return (
     <>
@@ -61,52 +69,44 @@ function UserCard({
             overlap="circular"
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             badgeContent={
-              // <SmallAvatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="label"
-              >
-                <input
-                  onChange={(e) => {
-                    setEditProfile((prev) => ({
-                      ...prev,
-                      dp: e.target.files[0].name,
-                    }));
-                  }}
-                  hidden
-                  accept="image/*"
-                  type="file"
-                />
-                <CameraAltIcon
-                  sx={{
-                    width: 32,
-                    height: 32,
-                    border: "2px solid gray",
-                    color: "gray",
-                    background: "lightgray",
-                  }}
-                  className="img-rounded"
-                />{" "}
-              </IconButton>
+              edit ? (
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="label"
+                >
+                  <input
+                    onChange={(e) => {
+                      imageUpload(URL.createObjectURL(e.target.files[0]));
+                    }}
+                    hidden
+                    accept="image/*"
+                    type="file"
+                  />
+                  <CameraAltIcon
+                    sx={{
+                      width: 32,
+                      height: 32,
+                      border: "2px solid gray",
+                      color: "gray",
+                      background: "lightgray",
+                    }}
+                    className="img-rounded"
+                  />{" "}
+                </IconButton>
+              ) : (
+                ""
+              )
             }
           >
             <img
-              src={dp}
+              src={edit ? editProfile.dp : dp}
               alt={username}
-              className="img-responsive img-rounded"
+              className="img-rounded"
               height="300px"
               width="300px"
             />
           </Badge>
-
-          {/* <img
-            src={dp}
-            alt={username}
-            className="img-responsive img-rounded"
-            height="300px"
-            width="300px"
-          /> */}
         </Box>
         <Box>
           <Stack direction="row" alignItems="center" spacing={2}>
@@ -177,19 +177,21 @@ function UserCard({
           </Stack>
           <p className="flex align-items-center flex-space-between">
             <LinkIcon />{" "}
-            {
-              edit ? <Input
-              onChange={(e) => {
-                setEditProfile((prev) => ({
-                  ...prev,
-                  url: e.target.value,
-                }))}}
-               value={editProfile.url}/> :    
+            {edit ? (
+              <Input
+                onChange={(e) => {
+                  setEditProfile((prev) => ({
+                    ...prev,
+                    url: e.target.value,
+                  }));
+                }}
+                value={editProfile.url}
+              />
+            ) : (
               <a className="color-primary pr-1 pl-1" href={url}>
-              {url}
-            </a>
-            }
-
+                {url}
+              </a>
+            )}
             <CalendarMonthIcon className="pr-0" /> joined at : {createdAt}
           </p>
         </Box>

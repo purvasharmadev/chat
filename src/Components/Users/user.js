@@ -63,7 +63,7 @@ function User({ fname, lname, bio, uname, img, id }) {
           secondary={
             <React.Fragment>
               <Typography component="span" sx={{ display: "block" }}>
-                {userInfo.following.findIndex((i) => i._id === id) === -1 ? (
+                {userInfo.following && userInfo.following.findIndex((i) => i._id === id) === -1 ? (
                   <Button
                     variant="outlined"
                     size="small"

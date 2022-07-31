@@ -5,12 +5,11 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { addPosts } from "../../Features/post-slice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import {getDataFromLocal} from "../../Hooks/useLocalStorage";
 
 function AddPost() {
+  const currUser = JSON.parse(localStorage.getItem('user'))
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
-  const uname = getDataFromLocal('user','u')
 
   const changeHandler = (e) => {
     setContent(e.target.value);
@@ -43,8 +42,8 @@ function AddPost() {
           alignItems="center"
           justifyContent="center"
         >
-          <Avatar src={uname.dp}
-          alt={uname.username.slice()[0].toUpperCase()}
+          <Avatar src={currUser.dp}
+          alt={currUser.username.slice()[0].toUpperCase()}
            aria-label="avatar" />
           <TextareaAutosize
             aria-label="minimum height"

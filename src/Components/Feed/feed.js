@@ -49,6 +49,7 @@ function Feed() {
                 likeCount={item.likes.likeCount}
                 likedBy={item.likes.likedBy}
                 commentCount={item.comments.length}
+                dp={item.dp}
               />
             );
           })}

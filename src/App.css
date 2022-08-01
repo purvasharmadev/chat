@@ -23,3 +23,11 @@ div{
 .App{
     background-color: var(--BACKGROUND-LIGHT);
 }
+
+.cursor-pointer:hover{
+cursor: pointer;
+}
+
+.mt-0{
+    margin-top: 0;
+}

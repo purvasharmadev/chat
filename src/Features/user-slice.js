@@ -1,14 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getDataFromLocal } from "../Hooks/useLocalStorage";
 
 // initial state
 const initialStateValue = {
   userStatus: "idle",
   user: [],
+  userInfo: getDataFromLocal("user", []),
   bookmark: [],
   userError: null,
 };
 
+// User
 export const users = createAsyncThunk("api/users", async (thunkAPI) => {
   try {
     const res = await axios.get("/api/users");
@@ -17,6 +20,44 @@ export const users = createAsyncThunk("api/users", async (thunkAPI) => {
     return thunkAPI.rejectWithValue(userError.response.data.errors[0]);
   }
 });
+
+// Get user by id
+export const getUserById = createAsyncThunk(
+  "api/userId",
+  async (id, thunkAPI) => {
+    try {
+      const res = await axios.get(`/api/users/${id}`);
+      return res.data.user;
+    } catch (userError) {
+      console.error(userError);
+      return thunkAPI.rejectWithValue(userError.response.data.errors[0]);
+    }
+  }
+);
+
+//Edit User
+export const editUser = createAsyncThunk(
+  "editUser",
+  async ({ data, token }, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        "/api/users/edit/",
+        {
+          userData: data,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      return res.data.user;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.errors[0]);
+    }
+  }
+);
 
 // Bookmark
 export const getBookmarkedPostList = createAsyncThunk(
@@ -51,7 +92,7 @@ export const saveToBookmark = createAsyncThunk(
       return res.data.bookmarks;
     } catch (error) {
       console.error(error);
-      return thunkAPI.rejectWithValue(error.response.data.erorrs[0]);
+      return thunkAPI.rejectWithValue(error.response.data.errors[0]);
     }
   }
 );
@@ -77,6 +118,50 @@ export const removeFromBookmark = createAsyncThunk(
   }
 );
 
+//follow
+export const followUser = createAsyncThunk(
+  "followUser",
+  async ({ token, id }, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        `/api/users/follow/${id}`,
+        {},
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.error(error.response.data.errors[0]);
+      return thunkAPI.rejectWithValue(error.response.data.erors[0]);
+    }
+  }
+);
+//unfollow
+export const unfollowUser = createAsyncThunk(
+  "unfollowUser",
+  async ({ token, id }, thunkAPI) => {
+    try {
+      const res = await axios.post(
+        `/api/users/unfollow/${id}`,
+        {},
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.error(error.response.data.errors[0]);
+      return thunkAPI.rejectWithValue(error.response.data.erors[0]);
+    }
+  }
+);
+
+
 export const userSlice = createSlice({
   name: "user",
   initialState: initialStateValue,
@@ -94,8 +179,19 @@ export const userSlice = createSlice({
       .addCase(users.rejected, (state, action) => {
         state.userError = action.payload;
         state.userStatus = "user failed";
-      });
-    builder
+      })
+      .addCase(getUserById.pending, (state) => {
+        state.userStatus = "user loading";
+      })
+      .addCase(getUserById.fulfilled, (state, action) => {
+        state.userInfo = action.payload;
+        state.userStatus = "user succeded";
+        state.userError = null;
+      })
+      .addCase(getUserById.rejected, (state, action) => {
+        state.userError = action.payload;
+        state.userStatus = "user failed";
+      })
       .addCase(getBookmarkedPostList.pending, (state) => {
         state.userStatus = "loading bookmarks list";
       })
@@ -131,6 +227,42 @@ export const userSlice = createSlice({
       .addCase(removeFromBookmark.rejected, (state, action) => {
         state.userError = action.payload;
         state.userStatus = "failed";
+      })
+      .addCase(editUser.pending, (state) => {
+        state.userStatus = "edit user pending";
+      })
+      .addCase(editUser.fulfilled, (state, action) => {
+        state.userInfo = action.payload;
+        state.userStatus = "edit user success";
+        state.userError = null;
+      })
+      .addCase(editUser.rejected, (state, action) => {
+        state.userError = action.payload;
+        state.userStatus = "failed";
+      })
+      .addCase(followUser.pending, (state) => {
+        state.userStatus = "user loading";
+      })
+      .addCase(followUser.fulfilled, (state, action) => {
+        state.userInfo = action.payload.user;
+        state.userStatus = "user succeded";
+        state.userError = null;
+      })
+      .addCase(followUser.rejected, (state, action) => {
+        state.userError = action.payload;
+        state.userStatus = "user failed";
+      })
+      .addCase(unfollowUser.pending, (state) => {
+        state.userStatus = "user loading";
+      })
+      .addCase(unfollowUser.fulfilled, (state, action) => {
+        state.userInfo = action.payload.user;
+        state.userStatus = "user succeded";
+        state.userError = null;
+      })
+      .addCase(unfollowUser.rejected, (state, action) => {
+        state.userError = action.payload;
+        state.userStatus = "user failed";
       });      
       ;
   },

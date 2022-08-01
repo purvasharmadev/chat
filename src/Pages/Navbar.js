@@ -12,14 +12,10 @@ import { useDispatch } from "react-redux";
 import { logout } from "../Auth/auth-slice";
 import { toast } from "react-toastify";
 import ForumIcon from "@mui/icons-material/Forum";
-import { getDataFromLocal } from "../Hooks/useLocalStorage";
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  let uname = getDataFromLocal("user", {
-    username: "user",
-  });
-
+  const currUser = JSON.parse(localStorage.getItem('user'))
   const [open, setOpen] = useState(false);
   const StyledToolbar = styled(Toolbar)({
     display: "flex",
@@ -47,9 +43,10 @@ export default function Navbar() {
           </Typography>
           <ForumIcon sx={{ display: { xs: "block", sm: "none" } }} />
           <Avatar
-            alt={uname.username.toUpperCase()}
-            src="/static/images/avatar/1.jpg"
+            alt={currUser.username.toUpperCase()}
+            src={currUser.dp}
             onClick={(e) => setOpen(true)}
+            className="cursor-pointer"
           />
         </StyledToolbar>
         <Menu

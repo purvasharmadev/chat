@@ -1,8 +1,6 @@
 import React from "react";
-import {Link,useNavigate} from "react-router-dom"
-import {getPost,allPost,posts} from "../../Features/post-slice";
-import { getAuth } from "../../Auth/auth-slice";
-import {useSelector,useDispatch} from "react-redux"
+import {useNavigate} from "react-router-dom"
+import {getDataFromLocal} from "../../Hooks/useLocalStorage";
 import {
   Box,
   List,
@@ -15,17 +13,12 @@ import ExploreIcon from "@mui/icons-material/Explore";
 import FeedIcon from "@mui/icons-material/Feed";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import PersonIcon from '@mui/icons-material/Person';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 function Sidebar({mode,setMode}) {
-  const {post } = useSelector(getPost)
-  const {user} = useSelector(getAuth)
-  const dispatch = useDispatch()
   const navigateTo = useNavigate()
-
-  const myFeed = ()=>{
-    let newPost = post.posts.filter((i)=>i.username === user.username)
-    return {posts:newPost}
-  }
+  const currUser = getDataFromLocal('user', 'user')
 
   return (
     <Box
@@ -43,11 +36,18 @@ function Sidebar({mode,setMode}) {
         </ListItemButton>
 
 
-        <ListItemButton onClick={()=>dispatch(allPost(myFeed()))}>
+        <ListItemButton onClick={()=>navigateTo('/user-feed')}>
           <ListItemIcon>
             <FeedIcon />
           </ListItemIcon>
           <ListItemText primary="My Feed" />
+        </ListItemButton>
+
+        <ListItemButton onClick={()=>navigateTo('/trending')}>
+          <ListItemIcon>
+            <TrendingUpIcon />
+          </ListItemIcon>
+          <ListItemText primary="Trending" />
         </ListItemButton>
 
         <ListItemButton onClick={()=>navigateTo('/bookmark')}>
@@ -56,6 +56,14 @@ function Sidebar({mode,setMode}) {
           </ListItemIcon>
           <ListItemText primary="Bookmarks" />
         </ListItemButton>
+
+        <ListItemButton onClick={()=>navigateTo(`/profile/${currUser._id}`)}>
+          <ListItemIcon>
+            <PersonIcon />
+          </ListItemIcon>
+          <ListItemText primary="Profile" />
+        </ListItemButton>
+
 
         <ListItemButton>
           <ListItemIcon>

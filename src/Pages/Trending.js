@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPost, posts } from "../Features/post-slice";
 import { Box,Stack,Fab } from "@mui/material";
@@ -12,10 +12,8 @@ function Trending() {
     const { postStatus, postError, post } = useSelector(getPost);
     const dispatch = useDispatch();
     const navigateTo = useNavigate()
-    const [allPost,setAllPost ] = useState([])
     useEffect(() => {
       dispatch(posts());
-      setAllPost(post.posts)
       // eslint-disable-next-line
     }, []);
   

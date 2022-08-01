@@ -7,9 +7,6 @@ import URLRoutes from "./router";
 import Navbar from "./Pages/Navbar";
 import Sidebar from "./Components/SideNavbar/sidebar";
 import Rightbar from "./Components/Rightbar/rightbar";
-
-import { useSelector, useDispatch } from "react-redux";
-import { getAuth } from "./Auth/auth-slice";
 import { getDataFromLocal } from "./Hooks/useLocalStorage";
 
 // import toastify
@@ -24,7 +21,6 @@ const env = process.env.REACT_APP_JWT_SECRET;
 
 function App() {
   const [mode, setMode] = useState("dark");
-  const { status, isLoggedIn } = useSelector(getAuth);
   const login = getDataFromLocal('isLoggedIn',false)
 
   const darkTheme = createTheme({

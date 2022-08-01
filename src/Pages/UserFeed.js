@@ -13,7 +13,7 @@ function UserFeed() {
         return userInfo.following.find((item)=>item.username === i.username)
     })
   return (
-    <Box flex={6}>
+    <Box flex={6} m={2} className={myPost.length > 2? "":"h-100"}>
         <h2>My Feed</h2>
       <Stack direction="column-reverse">
         {myPost.length !== 0 &&
@@ -33,6 +33,9 @@ function UserFeed() {
             );
           })}
       </Stack>
+      {
+        myPost.length === 0 &&  <h2 className="text-center">Follow some users!</h2>
+      }
     </Box>
   )
 }

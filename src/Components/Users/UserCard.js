@@ -154,7 +154,6 @@ function UserCard({
                 ""
               )}
             </Box>
-            {edit && <Button onClick={editHandler}> Save Changes</Button>}
           </Stack>
 
           {edit ? (
@@ -194,7 +193,10 @@ function UserCard({
             )}
             <CalendarMonthIcon className="pr-0" /> joined at : {createdAt}
           </p>
+
+          {edit && <Button onClick={editHandler}> Save Changes</Button>}
         </Box>
+     
       </Stack>
     </>
   );

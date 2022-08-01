@@ -25,7 +25,7 @@ function Bookmark() {
 
 
   return (
-    <Box flex={6} m={2} direction="row-reverse">
+    <Box flex={6} m={2} direction="row-reverse" className={filterBookmarks.length > 2? "":"h-100"}>
       <h3>Bookmarks</h3>
       <Box m={2}>
         <Fab
@@ -47,6 +47,7 @@ function Bookmark() {
                 key={item._id}
                 date={item.createdAt.split("T")[0]}
                 username={item.username}
+                dp={item.dp}
                 content={item.content}
                 likeCount={item.likes.likeCount}
                 likedBy={item.likes.likedBy}
@@ -56,7 +57,7 @@ function Bookmark() {
           );
         })
       ) : (
-        <h2>Add some post to your bookmark</h2>
+        <h2 className="text-center">Add some post to your bookmark</h2>
       )}
       </Stack>
 

@@ -15,7 +15,7 @@ function Profile() {
     },[id])
 
   return (
-    <Box flex={6} className="h-100">
+    <Box flex={6} className="h-100" color="text.primary">
       {
         userInfo.length !== 0 ?
         <UserCard

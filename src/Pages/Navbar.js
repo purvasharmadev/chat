@@ -46,6 +46,7 @@ export default function Navbar() {
             alt={currUser.username.toUpperCase()}
             src={currUser.dp}
             onClick={(e) => setOpen(true)}
+            className="cursor-pointer"
           />
         </StyledToolbar>
         <Menu

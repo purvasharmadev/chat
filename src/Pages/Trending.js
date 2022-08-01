@@ -13,7 +13,6 @@ function Trending() {
     const dispatch = useDispatch();
     const navigateTo = useNavigate()
     const [allPost,setAllPost ] = useState([])
-    console.log("allPost ", allPost)
     useEffect(() => {
       dispatch(posts());
       setAllPost(post.posts)
@@ -39,8 +38,8 @@ function Trending() {
     let trendingPost = post.posts.slice().sort((a,b)=> b.likes.likeCount - a.likes.likeCount)
 
   return (
-    <Box flex={6} alignItems="center" justifyContent="center">
-     <h3>Trending</h3>
+    <Box flex={6} m={2}alignItems="center" justifyContent="center">
+     <h2>Trending</h2>
       {postStatus === "post loading" && (
         <h2 className="text-center">Loading.....</h2>
       )}

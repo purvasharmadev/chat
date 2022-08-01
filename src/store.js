@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from "./Auth/auth-slice";
-import postReducer from "./Features/post-slice";
-import userReducer from "./Features/user-slice";
-import commentsReducer from "./Features/comment-slice";
+import postReducer from "./Features/post-slice"
+import userReducer from "./Features/user-slice"
+import commentsReducer from "./Features/comment-slice"
 import { authMiddleware } from './Auth/auth-middleware';
 
 const reducer = {

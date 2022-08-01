@@ -12,7 +12,7 @@ import WestIcon from "@mui/icons-material/West";
 function Bookmark() {
   let token = getDataFromLocal("token", "user");
   const navigateTo = useNavigate()
-  const {bookmark} = useSelector(getUser)
+  const {bookmark, userStatus} = useSelector(getUser)
   const {post} = useSelector(getPost)
   const dispatch = useDispatch();
   useEffect(() => {
@@ -37,6 +37,10 @@ function Bookmark() {
           <WestIcon />
         </Fab>
       </Box>
+      {userStatus === 'loading bookmarks list' && <Box className="border text-center">
+        <h3>loading...</h3>
+        </Box>}
+
       <Stack direction="column-reverse">
       {filterBookmarks.length !== 0 ? (
           filterBookmarks.map((item) => {

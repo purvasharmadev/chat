@@ -166,9 +166,8 @@ function Comments({ username, id,dp }) {
                       <Avatar
                         aria-label="avatar"
                         sx={{ width: 30, height: 30 }}
-                       src={i.dp}
                       >
-                        {i.username.slice()[0].toUpperCase()}
+                        {uname.username.slice()[0].toUpperCase()}
                       </Avatar>
                     }
                     title={i.username}
@@ -208,7 +207,7 @@ function Comments({ username, id,dp }) {
                               setEdit({
                                 ...edit,
                                 state: !edit.state,
-                                id: i._id
+                                id: i._id,
                               }),
                               setEditComment(i.commentData)
                             )}

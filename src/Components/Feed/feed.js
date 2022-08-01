@@ -34,7 +34,8 @@ function Feed() {
     <Box flex={6} alignItems="center" justifyContent="center">
       <AddPost />
       {postStatus === "post loading" && (
-        <h2 className="text-center">Loading.....</h2>
+        <div className="text-center h-100">
+          <h2>Loading.....</h2></div>
       )}
       <Stack direction="column-reverse">
         {post.length !== 0 &&

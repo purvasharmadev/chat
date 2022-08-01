@@ -6,6 +6,7 @@ import {
   IconButton,
   Input,
   Button,
+  Avatar,
 } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LinkIcon from "@mui/icons-material/Link";
@@ -36,7 +37,6 @@ function UserCard({
     dp: uname.dp,
   });
   const [edit, setEdit] = useState(false);
-
 
   const editHandler = () => {
     dispatch(
@@ -99,12 +99,10 @@ function UserCard({
               )
             }
           >
-            <img
+            <Avatar
               src={edit ? editProfile.dp : dp}
               alt={username}
-              className="img-rounded"
-              height="300px"
-              width="300px"
+              sx={{ width: 300, height: 300 }}
             />
           </Badge>
         </Box>
@@ -196,7 +194,6 @@ function UserCard({
 
           {edit && <Button onClick={editHandler}> Save Changes</Button>}
         </Box>
-     
       </Stack>
     </>
   );

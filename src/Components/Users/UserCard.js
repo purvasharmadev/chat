@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import {
   Stack,
   Badge,
@@ -6,6 +6,7 @@ import {
   IconButton,
   Input,
   Button,
+  Avatar
 } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LinkIcon from "@mui/icons-material/Link";
@@ -14,6 +15,7 @@ import { getDataFromLocal } from "../../Hooks/useLocalStorage";
 import { editUser } from "../../Features/user-slice";
 import { useDispatch } from "react-redux";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import {toast} from "react-toastify"
 
 function UserCard({
   username,
@@ -37,15 +39,22 @@ function UserCard({
   });
   const [edit, setEdit] = useState(false);
 
-
   const editHandler = () => {
-    dispatch(
-      editUser({
-        data: editProfile,
-        token: getDataFromLocal("token", "token"),
-      })
-    );
-    setEdit(false);
+    if(editProfile.firstName && editProfile.lastName !== ''  ){
+      dispatch(
+        editUser({
+          data: editProfile,
+          token: getDataFromLocal("token", "token"),
+        })
+      );
+      setEdit(false);
+    }else{
+      toast.warning("names can't be empty!", {
+        toastId: "error-failed",
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });    }
+
   };
 
   const imageUpload = (file) => {
@@ -99,12 +108,10 @@ function UserCard({
               )
             }
           >
-            <img
+            <Avatar
               src={edit ? editProfile.dp : dp}
-              alt={username}
-              className="img-rounded"
-              height="300px"
-              width="300px"
+              alt={username.toUpperCase()}
+              sx={{ height: { xs: 250, sm: 300 }, width:{xs:250,sm:300}}}
             />
           </Badge>
         </Box>
@@ -121,6 +128,7 @@ function UserCard({
                       }));
                     }}
                     value={editProfile.firstName}
+                    placeholder="first name"
                   />
                   <Input
                     onChange={(e) => {
@@ -130,6 +138,7 @@ function UserCard({
                       }));
                     }}
                     value={editProfile.lastName}
+                    placeholder="last name"
                   />
                 </Stack>
               ) : (
@@ -165,6 +174,7 @@ function UserCard({
                 }));
               }}
               value={editProfile.bio}
+              placeholder="bio"
             />
           ) : (
             <p>{bio}</p>
@@ -174,7 +184,7 @@ function UserCard({
             <h4>Followers: {followers.length}</h4>
             <h4>Following: {following.length}</h4>
           </Stack>
-          <p className="flex align-items-center flex-space-between">
+          <p className="flex align-items-center flex-space-between flex-wrap">
             <LinkIcon />{" "}
             {edit ? (
               <Input
@@ -185,6 +195,7 @@ function UserCard({
                   }));
                 }}
                 value={editProfile.url}
+                placeholder="portfolio url"
               />
             ) : (
               <a className="color-primary pr-1 pl-1" href={url}>
@@ -196,7 +207,6 @@ function UserCard({
 
           {edit && <Button onClick={editHandler}> Save Changes</Button>}
         </Box>
-     
       </Stack>
     </>
   );

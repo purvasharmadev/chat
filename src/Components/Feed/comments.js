@@ -41,11 +41,27 @@ function Comments({ username, id,dp }) {
     state: false,
     id: "",
   });
-  const { comment } = useSelector(getComments);
+  const { comment, commentsError } = useSelector(getComments);
   const { user } = useSelector(getAuth);
 
   const dispatch = useDispatch();
   const uname = getDataFromLocal("user", user);
+
+  useEffect(() => {
+    if (commentsError === undefined) {
+      toast.error("something went wrong!! try again later", {
+        toastId: "user-error-failed",
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    } else {
+      toast.error(commentsError, {
+        toastId: "user-error-failed",
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+      });
+    }
+  }, [commentsError]);
 
   // add a comment
   const addCommentHandler = (id, text) => {
@@ -155,8 +171,8 @@ function Comments({ username, id,dp }) {
         </Button>
       </Stack>
 
-      <Box mt={2} className="h-100">
-        <Stack direction="column-reverse" spacing={2}>
+      <Box mt={2} className={comment.comments && comment.comments.length > 2 ? "" : "h-100"}>
+        <Stack direction="column" spacing={2}>
           {comment.comments ? (
             comment.comments.map((i) => {
               return (

@@ -202,7 +202,7 @@ export const userSlice = createSlice({
       })
       .addCase(getBookmarkedPostList.rejected, (state, action) => {
         state.userError = action.payload;
-        state.userStatus = "failed";
+        state.userStatus = 'user failed'
       })
       .addCase(saveToBookmark.pending, (state) => {
         state.userStatus = "posting bookmarks";
@@ -214,7 +214,7 @@ export const userSlice = createSlice({
       })
       .addCase(saveToBookmark.rejected, (state, action) => {
         state.userError = action.payload;
-        state.userStatus = "failed";
+        state.userStatus = 'user failed'
       })
       .addCase(removeFromBookmark.pending, (state) => {
         state.userStatus = "posting bookmarks";
@@ -226,7 +226,7 @@ export const userSlice = createSlice({
       })
       .addCase(removeFromBookmark.rejected, (state, action) => {
         state.userError = action.payload;
-        state.userStatus = "failed";
+        state.userStatus = 'user failed'
       })
       .addCase(editUser.pending, (state) => {
         state.userStatus = "edit user pending";
@@ -238,7 +238,7 @@ export const userSlice = createSlice({
       })
       .addCase(editUser.rejected, (state, action) => {
         state.userError = action.payload;
-        state.userStatus = "failed";
+        state.userStatus = 'user failed'
       })
       .addCase(followUser.pending, (state) => {
         state.userStatus = "user loading";

@@ -4,16 +4,31 @@ import { getUserById, getUser } from '../Features/user-slice';
 import {useSelector,useDispatch} from "react-redux"
 import UserCard from "../Components/Users/UserCard";
 import {Box} from "@mui/material";
+import {toast} from 'react-toastify';
 
 function Profile() {
   const {id} = useParams()
-  const {userInfo} = useSelector(getUser)
+  const {userInfo,userError} = useSelector(getUser)
     const dispatch = useDispatch()
     useEffect(()=>{
       dispatch(getUserById(id))
       // eslint-disable-next-line
     },[id])
-
+    useEffect(() => {
+      if (userError === undefined) {
+        toast.error("something went wrong!! try again later", {
+          toastId: "user-error-failed",
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      } else {
+        toast.error(userError, {
+          toastId: "user-error-failed",
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    }, [userError]);
   return (
     <Box flex={6} className="h-100" color="text.primary">
       {

@@ -8,6 +8,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { useNavigate } from "react-router-dom";
@@ -63,16 +64,7 @@ function User({ fname, lname, bio, uname, img, id }) {
           secondary={
             <React.Fragment>
               <Typography component="span" sx={{ display: "block" }}>
-                {userInfo.following && userInfo.following.findIndex((i) => i._id === id) === -1 ? (
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    endIcon={<PersonAddIcon />}
-                    onClick={() => followHandler(id)}
-                  >
-                    Follow
-                  </Button>
-                ) : (
+                {userInfo.following && userInfo.following.findIndex((i) => i._id === id) !== -1 ? (
                   <Button
                     variant="outlined"
                     size="small"
@@ -80,6 +72,15 @@ function User({ fname, lname, bio, uname, img, id }) {
                     onClick={() => unfollowHandler(id)}
                   >
                     UnFollow
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    endIcon={<PersonAddIcon />}
+                    onClick={() => followHandler(id)}
+                  >
+                    Follow
                   </Button>
                 )}
               </Typography>

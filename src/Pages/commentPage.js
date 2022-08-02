@@ -24,9 +24,7 @@ function CommentPage() {
     <Box
       flex={6}
       alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: "100%" }}
-    >
+      justifyContent="center">
       <Box m={2}>
         <Fab
           onClick={() => navigateTo("/")}

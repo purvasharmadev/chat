@@ -8,6 +8,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../Auth/auth-slice";
 import { toast } from "react-toastify";
@@ -15,6 +16,7 @@ import ForumIcon from "@mui/icons-material/Forum";
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  const navigateTo = useNavigate()
   const currUser = JSON.parse(localStorage.getItem('user'))
   const [open, setOpen] = useState(false);
   const StyledToolbar = styled(Toolbar)({
@@ -65,6 +67,11 @@ export default function Navbar() {
           }}
         >
           <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+          <MenuItem onClick={()=>navigateTo(`/profile/${currUser._id}`)}>Profile</MenuItem>
+          <MenuItem onClick={()=>navigateTo('/bookmark')} sx={{ display: { xs: "block", sm: "none" } }}>Bookmarks</MenuItem>
+          <MenuItem onClick={()=>navigateTo('/user-feed')} sx={{ display: { xs: "block", sm: "none" } }}>My Feed</MenuItem>
+          <MenuItem onClick={()=>navigateTo('/trending')} sx={{ display: { xs: "block", sm: "none" } }}>Trending</MenuItem>
+          <MenuItem onClick={()=>navigateTo('/')} sx={{ display: { xs: "block", sm: "none" } }}>Explore</MenuItem>
         </Menu>
       </AppBar>
     </>

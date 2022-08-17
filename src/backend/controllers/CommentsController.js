@@ -108,11 +108,15 @@ export const editPostCommentHandler = function (schema, request) {
     }
     post.comments[commentIndex] = {
       ...post.comments[commentIndex],
-      ...commentData,
+      commentData,
       updatedAt: formatDate(),
     };
     this.db.posts.update({ _id: postId }, post);
-    return new Response(201, {}, { comments: post.comments });
+    return new Response(
+      201,
+      {},
+      { comments: post.comments, posts: this.db.posts }
+    );
   } catch (error) {
     return new Response(
       500,

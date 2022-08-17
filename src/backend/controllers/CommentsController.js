@@ -49,7 +49,7 @@ export const addPostCommentHandler = function (schema, request) {
 
     const comment = {
       _id: uuid(),
-      ...commentData,
+      commentData,
       username: user.username,
       lastName: user.lastName,
       dp: user.dp,
@@ -60,7 +60,11 @@ export const addPostCommentHandler = function (schema, request) {
     const post = schema.posts.findBy({ _id: postId }).attrs;
     post.comments.push(comment);
     this.db.posts.update({ _id: postId }, { ...post, updatedAt: formatDate() });
-    return new Response(201, {}, { posts: this.db.posts });
+    return new Response(
+      201,
+      {},
+      { comments: post.comments, posts: this.db.posts }
+    );
   } catch (error) {
     return new Response(
       500,
@@ -173,7 +177,7 @@ export const deletePostCommentHandler = function (schema, request) {
  * send POST Request at /api/comments/upvote/:postId/:commentId
  * */
 
- export const upvotePostCommentHandler = function (schema, request) {
+export const upvotePostCommentHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
   try {
     if (!user) {

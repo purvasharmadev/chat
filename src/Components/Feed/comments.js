@@ -174,9 +174,9 @@ function Comments({ username, id,dp }) {
       <Box mt={2} className={comment.comments && comment.comments.length > 2 ? "" : "h-100"}>
         <Stack direction="column" spacing={2}>
           {comment.comments ? (
-            comment.comments.map((i) => {
+            comment.comments.map((i,index) => {
               return (
-                <Card className="mb-1">
+                <Card key={index} className="mb-1">
                   <CardHeader
                     avatar={
                       <Avatar

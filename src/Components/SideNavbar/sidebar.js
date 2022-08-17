@@ -1,6 +1,5 @@
 import React from "react";
 import {useNavigate} from "react-router-dom"
-import {getDataFromLocal} from "../../Hooks/useLocalStorage";
 import {
   Box,
   List,
@@ -18,7 +17,6 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 function Sidebar({mode,setMode}) {
   const navigateTo = useNavigate()
-  const currUser = getDataFromLocal('user', 'user')
 
   return (
     <Box
@@ -57,7 +55,7 @@ function Sidebar({mode,setMode}) {
           <ListItemText primary="Bookmarks" />
         </ListItemButton>
 
-        <ListItemButton onClick={()=>navigateTo(`/profile/${currUser._id}`)}>
+        <ListItemButton onClick={()=>navigateTo('/userprofile')}>
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>

@@ -67,7 +67,7 @@ export default function Navbar() {
           }}
         >
           <MenuItem onClick={logoutHandler}>Logout</MenuItem>
-          <MenuItem onClick={()=>navigateTo(`/profile/${currUser._id}`)}>Profile</MenuItem>
+          <MenuItem onClick={()=>navigateTo('/userprofile')}>Profile</MenuItem>
           <MenuItem onClick={()=>navigateTo('/bookmark')} sx={{ display: { xs: "block", sm: "none" } }}>Bookmarks</MenuItem>
           <MenuItem onClick={()=>navigateTo('/user-feed')} sx={{ display: { xs: "block", sm: "none" } }}>My Feed</MenuItem>
           <MenuItem onClick={()=>navigateTo('/trending')} sx={{ display: { xs: "block", sm: "none" } }}>Trending</MenuItem>

@@ -148,7 +148,9 @@ function UserCard({
                   </h2>
                 </>
               )}
-              <span>@{username}</span>
+              {
+                edit ? '' : <span>@{username}</span>
+              }
             </Box>
             <Box>
               {uname.username === username ? (

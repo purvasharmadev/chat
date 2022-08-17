@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { followUser, unfollowUser, getUser } from "../../Features/user-slice";
 import { useDispatch, useSelector } from "react-redux";
 
-function User({ fname, lname, bio, uname, img, id }) {
+function User({ fname, lname, uname, img, id }) {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector(getUser);

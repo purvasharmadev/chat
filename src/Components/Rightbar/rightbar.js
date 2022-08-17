@@ -7,9 +7,10 @@ import {getDataFromLocal} from "../../Hooks/useLocalStorage";
 import {toast} from "react-toastify"
 
 function Rightbar() {
-  const {user, userError,userStatus} = useSelector(getUser)
+  const {user, userError} = useSelector(getUser)
   const currUser = getDataFromLocal('user',[])
-  const filteredList = user.filter((i)=>i._id !== currUser._id )
+  const filteredList = user.filter((i)=> i.username !== currUser.username) 
+
   const dispatch = useDispatch()
   useEffect(()=>{
     dispatch(users())

@@ -17,6 +17,7 @@ import CommentPage from "./Pages/commentPage";
 import Bookmark from "./Pages/Bookmark";
 import Profile from "./Pages/Profile";
 import UserFeed from "./Pages/UserFeed";
+import UserProfile from "./Pages/CurrUserProfile";
 import { Login } from "./Auth/Login/login";
 import { Signin } from "./Auth/Signup/signup";
 import { PageNotFound } from "./Pages/PageNotFound";
@@ -45,6 +46,8 @@ export default function URLRoutes() {
         <Route path="/trending" element={<Trending/>}/>
         <Route path="/user-feed" element={<UserFeed/>}/>
         <Route path="/profile/:id" element={<Profile/>}/>
+        <Route path="/userprofile" element={<UserProfile/>}/>
+
       </Route>
 
       {/* Resticted Route */}

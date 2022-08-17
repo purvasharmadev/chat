@@ -151,7 +151,7 @@ function Comments({ username, id,dp }) {
  
         <Avatar
           aria-label="avatar"
-          src={dp}
+          src={uname.dp}
           alt={username.slice()[0].toUpperCase()}
           sx={{ width: 30, height: 30 }}
         ></Avatar>

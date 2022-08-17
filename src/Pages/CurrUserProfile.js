@@ -4,13 +4,12 @@ import {Box} from "@mui/material";
 import {getDataFromLocal} from '../Hooks/useLocalStorage';
 import { getUserById, getUser } from '../Features/user-slice';
 import {useSelector,useDispatch} from "react-redux";
-import {toast} from 'react-toastify';
 
 
 
 function UserProfile() {
     const user = getDataFromLocal('user',{})
-    const {userInfo,userError} = useSelector(getUser)
+    const {userInfo} = useSelector(getUser)
     const dispatch = useDispatch()
     const [currUser,setCurrUser] = useState(userInfo)
 
@@ -19,21 +18,6 @@ function UserProfile() {
       setCurrUser(userInfo)
       // eslint-disable-next-line
     },[userInfo])
-    useEffect(() => {
-      if (userError === undefined) {
-        toast.error("something went wrong!! try again later", {
-          toastId: "user-error-failed",
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      } else {
-        toast.error(userError, {
-          toastId: "user-error-failed",
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-      }
-    }, [userError]);
   return (
     <Box flex={6} className="h-100" color="text.primary">
         <UserCard
